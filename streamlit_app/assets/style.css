@@ -1,0 +1,62 @@
+/* -------------------------------------------------------------
+ GLOBAL OVERRIDES
+--------------------------------------------------------------*/
+
+html, body, [data-testid="stAppViewContainer"] {
+    background-color: #f7f9fc !important;
+}
+
+/* -------------------------------------------------------------
+ SIDEBAR STYLING
+--------------------------------------------------------------*/
+
+[data-testid="stSidebar"] {
+    background-color: #f1f5f9 !important;
+}
+
+.sidebar-title {
+    color: #1e40af !important;
+    font-size: 20px !important;
+}
+
+/* -------------------------------------------------------------
+ CUSTOM CARDS (for manual HTML usage)
+--------------------------------------------------------------*/
+
+.custom-card {
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.card-blue {
+    background-color: #e7f5ff !important;
+    border-left: 6px solid #339af0 !important;
+}
+
+.card-orange {
+    background-color: #fff4e6 !important;
+    border-left: 6px solid #f76707 !important;
+}
+
+.card-green {
+    background-color: #e6fcf5 !important;
+    border-left: 6px solid #20c997 !important;
+}
+
+/* -------------------------------------------------------------
+ BUTTON STYLING
+--------------------------------------------------------------*/
+
+.stButton > button {
+    background-color: #1971c2 !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 10px 24px !important;
+    font-weight: 600 !important;
+}
+
+.stButton > button:hover {
+    background-color: #1864ab !important;
+}

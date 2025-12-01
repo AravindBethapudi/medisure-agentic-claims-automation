@@ -1,0 +1,244 @@
+
+MediSure Health – Coverage Policy Manual (2025 Edition)
+Version: 1.0
+Release Date: January 1, 2025
+Confidential & Proprietary — MediSure Health
+Unauthorized distribution is prohibited.
+________________________________________
+📄 PAGE 2–3: Table of Contents
+1.0 General Policy Information  
+  1.1 Purpose  
+  1.2 Scope  
+  1.3 Definitions  
+  1.4 Member Eligibility  
+  1.5 Provider Responsibilities  
+  1.6 Policy Updates  
+  1.7 Documentation Standards  
+
+2.0 Primary Care & Office Visit Coverage  
+  2.1 Covered Service Codes  
+  2.2 Frequency Limitations  
+  2.3 Allowed Amounts Table  
+  2.4 Preventive vs Diagnostic Visit Rules  
+  2.5 PCP Referral Guidelines  
+  2.6 Medical Necessity Requirements  
+  2.7 Office Visit Summary Chart  
+
+3.0 Diagnostic Testing & Laboratory Services  
+  3.1 General Health Panel (CPT 80050)  
+  3.2 Urinalysis (CPT 81002)  
+  3.3 Frequency Constraints Table  
+  3.4 Medical Necessity Documentation  
+  3.5 Non-Covered Lab Services  
+  3.6 Clinical Review Guidelines  
+
+4.0 Imaging Services  
+  4.1 CT Head Scan (CPT 70450)  
+  4.2 MRI Lumbar Spine (CPT 72148)  
+  4.3 Authorization Requirements  
+  4.4 Allowed Amounts Table  
+  4.5 Medical Necessity Criteria  
+  4.6 Exceptions & Escalations  
+
+5.0 Telehealth & Preventive Care Services  
+  5.1 Telehealth Visit Rules  
+  5.2 Annual Wellness (G0439)  
+  5.3 Remote Care Limitations  
+  5.4 Documentation Requirements  
+  5.5 Summary Chart
+________________________________________
+🧱 1.0 GENERAL POLICY INFORMATION
+1.1 Purpose
+This policy manual outlines MediSure Health’s 2025 coverage rules for primary care visits, diagnostic services, imaging procedures, preventive care, and telehealth services.
+It defines eligibility, documentation requirements, and benefit limitations used during claim adjudication.
+________________________________________
+1.2 Scope
+This policy applies to:
+•	All MediSure Health members enrolled in 2025 benefit plans
+•	In-network and out-of-network providers
+•	Claims submitted electronically, via paper, or through partner systems
+•	All adjudication workflows, including automated, manual, and escalated reviews
+Policies herein represent standard coverage rules applied during automated claims validation.
+________________________________________
+1.3 Definitions
+Medical Necessity:
+A service that is clinically appropriate, evidence-based, and not primarily for convenience.
+Allowed Amount:
+The maximum reimbursable amount assigned to a service.
+Frequency Limit:
+The maximum number of services covered during a defined period.
+Prior Authorization (PA):
+Approval required before providing a service; lack of authorization may result in claim denial.
+________________________________________
+1.4 Member Eligibility
+To qualify for coverage:
+•	Membership must be active on the date of service
+•	Coverage tier must include the service
+•	Eligibility verification may require:
+o	Member ID
+o	Coverage period
+o	Plan type
+o	PCP assignment (if required)
+If eligibility cannot be verified, the claim must be escalated for manual review.
+________________________________________
+1.5 Provider Responsibilities
+Providers are responsible for:
+•	Submitting accurate CPT and ICD codes
+•	Ensuring required documentation is included
+•	Avoiding duplicate billing
+•	Maintaining compliance with MediSure policies
+•	Notifying members about non-covered services
+Claims missing documentation shall be routed to secondary validation.
+________________________________________
+1.6 Policy Updates
+Policies may be updated quarterly.
+Automated systems must reference the policy version effective at the time of service.
+________________________________________
+1.7 Documentation Standards
+Documentation must include:
+•	Diagnosis description
+•	Procedure description
+•	Clinical notes (if required)
+•	Medical necessity indicators
+•	Prior authorization number (if applicable)
+Incomplete documentation = auto-escalation.
+________________________________________
+🧱 2.0 PRIMARY CARE & OFFICE VISIT COVERAGE
+2.1 Covered Service Codes
+The following office visit CPT codes are covered for primary care:
+CPT Code	Description	Allowed Amount	Notes
+99213	Established patient visit	$150	No PA required
+99214	Extended patient visit	$210	No PA required
+________________________________________
+2.2 Frequency Limitations
+Visit Type	Frequency Limit
+Office Visit	3 visits per month
+Preventive Visit	1 annual preventive visit per year
+Visits beyond limits route to medical review.
+________________________________________
+2.3 Allowed Amount Table
+CPT Code	Standard Allowed	Max Allowed w/ Justification
+99213	$150	$170
+99214	$210	$230
+________________________________________
+2.4 Preventive vs Diagnostic Visit Rules
+Preventive Visit:
+•	CPT G0439
+•	Allowed once per calendar year
+•	Cannot be combined with diagnostic service codes on the same day
+________________________________________
+2.5 PCP Referral Guidelines
+Referrals are required for:
+•	Specialist consultations
+•	Extended diagnostics
+No referral = partial approval.
+________________________________________
+2.6 Medical Necessity Requirements
+Claims must include:
+•	Valid ICD diagnosis
+•	Description aligning with CPT code
+•	No conflicting codes (e.g., mental health DX with orthopedic CPT)
+________________________________________
+2.7 Office Visit Summary Chart
+Office visits are fully covered for active members when:
+- CPT is 99213 or 99214
+- ICD code matches visit type
+- Frequency limits not exceeded
+- No conflicting specialty rules
+________________________________________
+🧱 3.0 DIAGNOSTIC TESTING & LABORATORY SERVICES
+3.1 General Health Panel (CPT 80050)
+•	Covered once every 180 days
+•	Allowed amount: $300
+•	Additional tests require justification
+________________________________________
+3.2 Urinalysis (CPT 81002)
+•	Always covered
+•	No frequency limitation
+•	Allowed amount: $20
+________________________________________
+3.3 Frequency Constraints Table
+Test Code	Frequency Limit	Allowed Amount
+80050	Once every 180 days	$300
+81002	No limit	$20
+________________________________________
+3.4 Medical Necessity Documentation
+Claims must include:
+•	Clinical symptoms
+•	Reasons for test
+•	Ordering provider
+________________________________________
+3.5 Non-Covered Lab Services
+Non-covered:
+•	Experimental labs
+•	Non-FDA approved tests
+•	Duplicate tests within restricted periods
+________________________________________
+3.6 Clinical Review Guidelines
+If documentation fails guidelines → escalate.
+________________________________________
+🧱 4.0 IMAGING SERVICES
+4.1 CT Head Scan (CPT 70450)
+•	Requires prior authorization
+•	Allowed amount: $900
+•	Automatically approved for diagnosis:
+o	S09.90XA (Head Injury)
+________________________________________
+4.2 MRI Lumbar Spine (CPT 72148)
+•	Requires prior authorization
+•	Allowed amount: $1700
+•	Valid diagnosis:
+o	M54.4 (Low Back Pain)
+________________________________________
+4.3 Authorization Requirements
+Any MRI/CT without PA = manual review.
+________________________________________
+4.4 Allowed Amounts Table
+Imaging Code	Description	Allowed Amount
+70450	CT Head	$900
+72148	MRI Lumbar Spine	$1700
+________________________________________
+4.5 Medical Necessity Criteria
+Imaging services must meet at least one of the following:
+•	Trauma event
+•	Neurological symptoms
+•	Severe pain > 6 weeks
+•	Progressive weakness
+________________________________________
+4.6 Exceptions & Escalations
+Automatic escalation if:
+•	Conflicting diagnosis
+•	Missing PA
+•	Duplicate imaging
+________________________________________
+🧱 5.0 TELEHEALTH & PREVENTIVE CARE
+5.1 Telehealth Visit Rules
+Covered when:
+•	Synchronous video used
+•	Provider licensed in member’s state
+•	CPT codes match telehealth billing rules
+________________________________________
+5.2 Annual Wellness (G0439)
+•	Allowed once per year
+•	Member must have 12 months of continuous coverage
+________________________________________
+5.3 Remote Care Limitations
+Not covered:
+•	Asynchronous chats
+•	Text-based diagnosis
+________________________________________
+5.4 Documentation Requirements
+Telehealth claims must include:
+•	Duration
+•	Modality
+•	Provider location
+•	Patient consent
+________________________________________
+5.5 Summary Chart
+Telehealth = Covered  
+Preventive = Covered annually  
+CT/MRI = PA required  
+Labs = Limited coverage rules  
+Office visits = Standard coverage + limits
+________________________________________
+

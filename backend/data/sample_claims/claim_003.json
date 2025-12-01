@@ -1,0 +1,15 @@
+{
+    "claim_id": "CLM-001",
+    "format": "json",
+    "patient_name": "John Carter",
+    "member_id": "M12345678",
+    "provider_id": "PRV-9001",
+    "service_date": "2025-10-12",
+    "procedures": [
+      { "cpt_code": "99213", "description": "Office Visit", "cost": 150.00 },
+      { "cpt_code": "80050", "description": "General Health Panel", "cost": 280.00 }
+    ],
+    "diagnosis_codes": ["J10.1"],
+    "total_amount": 430.00
+  }
+  

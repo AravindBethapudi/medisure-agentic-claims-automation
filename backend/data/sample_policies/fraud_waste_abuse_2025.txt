@@ -1,0 +1,448 @@
+
+
+# **MediSure Health — Fraud, Waste & Abuse (FWA) Guidelines Manual**
+
+**Version:** 1.0
+**Effective Date:** January 1, 2025
+**Confidential & Proprietary — Restricted Distribution Only**
+
+---
+
+# 📄 **TABLE OF CONTENTS**
+
+```
+1.0 Introduction  
+  1.1 Purpose  
+  1.2 Scope  
+  1.3 Key Definitions  
+  1.4 Regulatory Framework  
+
+2.0 Categories of Fraud, Waste & Abuse  
+  2.1 Fraud  
+  2.2 Waste  
+  2.3 Abuse  
+  2.4 High-Risk Provider Patterns  
+
+3.0 Duplicate Billing & Upcoding Guidelines  
+  3.1 Duplicate CPT Detection  
+  3.2 Duplicate Day-of-Service Review  
+  3.3 Upcoding Red Flags  
+  3.4 Modifier Abuse  
+  3.5 Billing Patterns Table  
+
+4.0 High-Risk Provider Behavior  
+  4.1 Provider Risk Scoring Model  
+  4.2 High-Volume Billing Patterns  
+  4.3 Suspicious Frequency Patterns  
+  4.4 Member Overutilization  
+  4.5 Provider Watchlist Policies  
+
+5.0 FWA Detection Rules  
+  5.1 Automated Detection Rules  
+  5.2 Clinical Inconsistency Checks  
+  5.3 ICD/CPT Mismatch Rules  
+  5.4 Cost-Based Red Flags  
+  5.5 Machine-Learning Risk Indicators  
+
+6.0 Documentation & Coding Requirements  
+  6.1 Minimum Documentation  
+  6.2 Required Clinical Notes  
+  6.3 Missing/Invalid Documentation Triggers  
+  6.4 Common Documentation Failures  
+
+7.0 Investigation & Escalation Workflow  
+  7.1 Automated FWA Triage  
+  7.2 Case Creation  
+  7.3 Nurse Review  
+  7.4 SIU (Special Investigation Unit) Review  
+  7.5 Outcomes & Dispositions  
+
+8.0 Summary Tables  
+  8.1 FWA Red Flag Matrix  
+  8.2 Duplicate Billing Decision Matrix  
+  8.3 Provider Risk Tier Table  
+```
+
+---
+
+# 🧱 **1.0 INTRODUCTION**
+
+### **1.1 Purpose**
+
+This manual describes MediSure Health’s standards for identifying, preventing, and investigating potential instances of Fraud, Waste, and Abuse (FWA) within the claims submission process.
+
+It sets requirements for:
+
+* Automated detection systems
+* Manual investigation procedures
+* Provider compliance expectations
+* Escalation and reporting
+
+---
+
+### **1.2 Scope**
+
+Applicable to:
+
+* All claims submitted to MediSure Health
+* All provider types
+* All benefit plans
+* All adjudication channels
+
+---
+
+### **1.3 Key Definitions**
+
+**Fraud:**
+Intentional deception or misrepresentation to obtain unauthorized benefits.
+
+**Waste:**
+Overuse of services or inefficient practices that increase costs.
+
+**Abuse:**
+Practices inconsistent with sound medical or financial standards.
+
+---
+
+### **1.4 Regulatory Framework**
+
+This policy aligns with:
+
+* CMS Program Integrity Manual
+* HIPAA Fraud & Abuse Standards
+* Federal False Claims Act
+* State-level Medicaid regulations
+
+---
+
+# 🧱 **2.0 CATEGORIES OF FRAUD, WASTE & ABUSE**
+
+### **2.1 Fraud — Examples**
+
+* Billing for services not rendered
+* Submitting altered or falsified documentation
+* Upcoding to higher-level CPT codes
+* Misrepresenting diagnosis to justify services
+
+---
+
+### **2.2 Waste — Examples**
+
+* Ordering unnecessary tests
+* Repeating diagnostic procedures
+* Inefficient use of resources
+
+---
+
+### **2.3 Abuse — Examples**
+
+* Billing excessive frequency of services
+* Providing services beyond clinical need
+* Misuse of CPT modifiers
+
+---
+
+### **2.4 High-Risk Provider Patterns**
+
+Providers may be flagged if they:
+
+* Bill ≥ 300% above peer baseline
+* Submit high volume of duplicate claims
+* Routinely bill incompatible ICD/CPT combinations
+* Frequently exceed frequency limits
+
+---
+
+# 🧱 **3.0 DUPLICATE BILLING & UPCODING GUIDELINES**
+
+### **3.1 Duplicate CPT Detection**
+
+Duplicate CPT codes occurring:
+
+* On the same date
+* For the same member
+* By the same provider
+
+→ **Flag as possible duplicate claim**
+
+---
+
+### **3.2 Duplicate Day-of-Service Review**
+
+A repeat procedure within:
+
+* 0–1 days → **Likely duplicate**
+* 2–30 days → **Requires clinical justification**
+* > 30 days → Allowed if medically supported
+
+---
+
+### **3.3 Upcoding Red Flags**
+
+Upcoding indicators include:
+
+* Billing CPT 99214 instead of 99213 without documentation
+* Using MRI (72148) instead of X-ray when not indicated
+
+---
+
+### **3.4 Modifier Abuse**
+
+Examples:
+
+* Modifier -25 added without significant service
+* Modifier -59 used to bypass bundling rules
+
+---
+
+### **3.5 Billing Patterns Table**
+
+| Pattern               | Description | Risk Level |
+| --------------------- | ----------- | ---------- |
+| High volume CPT 99213 | >20/day     | Medium     |
+| Frequent 70450 scans  | >8/week     | High       |
+| Repeated 87880        | >3/day      | Medium     |
+| Same CPT twice/day    | Duplicate   | High       |
+
+---
+
+# 🧱 **4.0 HIGH-RISK PROVIDER BEHAVIOR**
+
+### **4.1 Provider Risk Scoring Model**
+
+Scoring Dimensions (0–100 scale):
+
+* Billing volume
+* Documentation quality
+* ICD/CPT match rate
+* Repeat abnormal claims
+* Prior audits
+
+Providers scoring ≥ 70 → **High-Risk Tier**
+
+---
+
+### **4.2 High-Volume Billing Patterns**
+
+Examples:
+
+* > 10 imaging tests per day
+* > 30 office visits/day
+* > 5 high-cost MRIs per week
+
+---
+
+### **4.3 Suspicious Frequency Patterns**
+
+Indicators include:
+
+* Weekly CT scans for same member
+* Repeated MRI of same anatomical region
+
+---
+
+### **4.4 Member Overutilization**
+
+Cases include:
+
+* Members receiving >5 major diagnostics per month
+* Repeated ER visits for same condition
+
+---
+
+### **4.5 Provider Watchlist Policies**
+
+Providers may be placed on watchlist if:
+
+* ≥3 failed audits within 12 months
+* History of billing anomalies
+* Peer outlier status
+
+---
+
+# 🧱 **5.0 FWA DETECTION RULES**
+
+### **5.1 Automated Detection Rules**
+
+Rule examples:
+
+* Duplicate CPT detection rule
+* Allowed amount threshold rule
+* High-Risk provider escalation rule
+* ICD/CPT mismatch rule
+
+---
+
+### **5.2 Clinical Inconsistency Checks**
+
+Examples:
+
+* Head injury ICD missing in CT head scan claim
+* Back pain ICD missing in MRI spine request
+
+---
+
+### **5.3 ICD/CPT Mismatch Table**
+
+| ICD Code | Expected CPT | Notes               |
+| -------- | ------------ | ------------------- |
+| S09.90XA | 70450        | Required for trauma |
+| M54.4    | 72148        | Lower back pain     |
+| J02.9    | 87880        | Strep test          |
+
+---
+
+### **5.4 Cost-Based Red Flags**
+
+Triggered if:
+
+* Claim amount > 150% of allowed
+* Claim includes repeated high-cost procedures
+
+---
+
+### **5.5 Machine-Learning Risk Indicators**
+
+AI-based red flags include:
+
+* Outlier provider behavior
+* Statistical anomalies
+* Sequential duplicate claim patterns
+
+---
+
+# 🧱 **6.0 DOCUMENTATION & CODING REQUIREMENTS**
+
+### **6.1 Minimum Documentation**
+
+Must include:
+
+* Member name
+* Date of service
+* Diagnosis
+* Procedure performed
+* Clinical justification
+
+---
+
+### **6.2 Required Clinical Notes**
+
+Notes must describe:
+
+* Symptoms
+* Duration
+* Prior treatments
+* Clinical findings
+
+---
+
+### **6.3 Missing/Invalid Documentation Triggers**
+
+Triggers:
+
+* Missing ICD
+* Missing CPT
+* Missing provider ID
+* Missing clinical notes
+
+---
+
+### **6.4 Common Documentation Failures**
+
+Examples:
+
+* Copy/paste progress notes
+* Outdated clinical documentation
+* Illegible scanned notes
+
+---
+
+# 🧱 **7.0 INVESTIGATION & ESCALATION WORKFLOW**
+
+### **7.1 Automated FWA Triage**
+
+System classifies claim as:
+
+* Low risk
+* Medium risk
+* High risk
+* Critical
+
+---
+
+### **7.2 Case Creation**
+
+High-risk claims automatically generate:
+
+* FWA case ID
+* Assigned investigator
+* Preliminary risk score
+
+---
+
+### **7.3 Nurse Review**
+
+Nurses evaluate:
+
+* Clinical necessity
+* Documentation quality
+* Provider history
+
+---
+
+### **7.4 SIU (Special Investigation Unit) Review**
+
+SIU evaluates:
+
+* Patterns of deception
+* Fraud ring indicators
+* Historical behavior
+
+---
+
+### **7.5 Outcomes & Dispositions**
+
+Final outcomes:
+
+* Approve
+* Partial approve
+* Deny
+* Refer to law enforcement
+* Provider audit
+* Education letter
+
+---
+
+# 🧱 **8.0 SUMMARY TABLES**
+
+### **8.1 FWA Red Flag Matrix**
+
+| Red Flag            | Example                 | Severity |
+| ------------------- | ----------------------- | -------- |
+| Duplicate claim     | Same CPT twice/day      | High     |
+| Upcoding            | 99214 w/o documentation | High     |
+| ICD/CPT mismatch    | 70450 w/o trauma code   | Medium   |
+| Excessive frequency | 87880 x 4/day           | Medium   |
+
+---
+
+### **8.2 Duplicate Billing Decision Matrix**
+
+| Pattern            | Action            |
+| ------------------ | ----------------- |
+| Same CPT, same day | Deny              |
+| Same CPT, 2–7 days | Escalate          |
+| Same CPT, >30 days | Approve w/ review |
+
+---
+
+### **8.3 Provider Risk Tier Table**
+
+| Tier     | Score Range | Description         |
+| -------- | ----------- | ------------------- |
+| Low      | 0–39        | Normal behavior     |
+| Medium   | 40–69       | Slightly abnormal   |
+| High     | 70–89       | High-risk patterns  |
+| Critical | 90–100      | Requires SIU review |
+
+

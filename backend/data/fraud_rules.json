@@ -1,0 +1,21 @@
+{
+    "risk_thresholds": {
+        "low": 0.3,
+        "medium": 0.7,
+        "high": 0.9
+    },
+    "red_flags": {
+        "duplicate_claim_within_days": 30,
+        "max_amount_deviation": 3.0,
+        "max_procedures_per_claim": 10,
+        "impossible_travel_speed_mph": 500
+    },
+    "high_risk_providers": [
+        "PRV-XXXX",
+        "PRV-YYYY"
+    ],
+    "suspicious_procedure_combinations": [
+        ["99213", "99214"],
+        ["80050", "80053"]
+    ]
+}

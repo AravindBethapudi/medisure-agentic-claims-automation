@@ -1,0 +1,269 @@
+MediSure Health — High-Cost & Authorization Rules Manual
+Version: 1.0
+Effective Date: January 1, 2025
+Confidential & Proprietary — MediSure Health
+This document contains clinical and administrative guidance used for determining prior authorization requirements and automated high-cost claim adjudication rules.
+________________________________________
+📄 TABLE OF CONTENTS
+1.0 Introduction  
+  1.1 Purpose  
+  1.2 Scope  
+  1.3 Definitions  
+  1.4 General Prior Authorization Rules  
+
+2.0 High-Cost Procedure Coverage  
+  2.1 CPT Codes Subject to High-Cost Review  
+  2.2 Allowed Amounts Table  
+  2.3 Frequency Limits  
+  2.4 Diagnostic vs Therapeutic Procedures  
+  2.5 Co-Pay and Cost-Sharing Limits  
+
+3.0 Prior Authorization Workflow  
+  3.1 Standard Authorization Process  
+  3.2 Clinical Review Requirements  
+  3.3 Required Documentation Checklist  
+  3.4 Authorization Case Categories  
+  3.5 Urgent vs Routine Requests  
+
+4.0 Medical Necessity Criteria  
+  4.1 General Principles  
+  4.2 Condition-Specific Criteria  
+  4.3 Red Flag Indicators  
+  4.4 ICD-to-CPT Clinical Link Table  
+  4.5 Common Reasons for Denial  
+
+5.0 Exceptions & Escalations  
+  5.1 Automatic Escalation Triggers  
+  5.2 Duplicate Procedure Review  
+  5.3 High-Risk Provider Behavior  
+  5.4 Allowed Amount Overrides  
+  5.5 Medical Director Review  
+
+6.0 Billing & Documentation Requirements  
+  6.1 Required Claim Elements  
+  6.2 PA Number Validation  
+  6.3 Claim Error Categories  
+  6.4 Documentation Failure Tree  
+
+7.0 Summary Tables  
+  7.1 Authorization Decision Matrix  
+  7.2 High-Cost Crosswalk Table  
+  7.3 Imaging Clinical Necessity Grid
+________________________________________
+🧱 1.0 INTRODUCTION
+1.1 Purpose
+This manual establishes the authorization and review rules applied to high-cost outpatient procedures, including CT imaging, MRI scans, specialty diagnostics, and selected therapeutic interventions.
+It is used by:
+•	Automated adjudication systems
+•	Clinical review teams
+•	Coding validation agents
+•	Multi-agent AI systems handling claim triage
+________________________________________
+1.2 Scope
+Applies to:
+•	All commercial MediSure plans
+•	In-network and out-of-network claims
+•	Electronic and paper prior authorization submissions
+•	All claims exceeding pre-defined cost thresholds
+________________________________________
+1.3 Definitions
+High-Cost Procedure:
+Any service with an allowed amount exceeding $750 or classified as clinically complex.
+Clinical Review:
+Manual assessment by trained nurses or medical directors.
+Red Flag Indicator:
+A pattern or condition suggesting elevated fraud or inappropriate billing.
+________________________________________
+1.4 General Prior Authorization Rules
+A procedure requires prior authorization (PA) if:
+•	Listed in the High-Cost CPT Table
+•	Total cost > $750
+•	Provider is classified as High-Risk Tier
+•	Diagnosis does not align with CPT code
+•	Repeat procedure within a restricted period
+________________________________________
+🧱 2.0 HIGH-COST PROCEDURE COVERAGE
+2.1 CPT Codes Subject to High-Cost Review
+CPT Code	Description	Cost Threshold	PA Required	Notes
+70450	CT Head Scan	> $750	Yes	Auto-approve for S09.90XA
+72148	MRI Lumbar Spine	> $1500	Yes	Must meet back-pain criteria
+76700	Abdominal Ultrasound	> $600	No	Review if repeated < 30 days
+85025	Complete Blood Count Panel	> $200	No	High volume — no PA
+G0439	Annual Wellness Visit	N/A	No	Preventive care
+________________________________________
+2.2 Allowed Amounts Table
+CPT Code	Standard Allowed	Maximum Allowed w/ Exception
+70450	$900	$1,050
+72148	$1,700	$2,000
+76700	$600	$700
+80050	$300	$350
+________________________________________
+2.3 Frequency Limits
+Procedure	Limit
+CT Head	Once every 90 days
+MRI Spine	Once every 180 days
+Ultrasound	Repeat allowed after 30 days
+CBC Panel	No frequency limit
+________________________________________
+2.4 Diagnostic vs Therapeutic
+Diagnostic imaging requires:
+•	Valid ICD diagnosis
+•	Symptoms matching CPT code
+•	Documentation of clinical necessity
+Therapeutic interventions require:
+•	Treatment plan
+•	Progress notes
+•	Risk vs benefit justification
+________________________________________
+2.5 Co-Pay & Cost Sharing
+Members may have:
+•	$20 office visit co-pay
+•	10–20% cost sharing for imaging
+•	Maximum out-of-pocket protection
+________________________________________
+🧱 3.0 PRIOR AUTHORIZATION WORKFLOW
+3.1 Standard Authorization Process
+Steps:
+1.	Provider submits PA request
+2.	System checks eligibility
+3.	System validates required fields
+4.	Clinical rules engine evaluates diagnosis
+5.	Decision is issued: Approve / Deny / Pend
+________________________________________
+3.2 Clinical Review Requirements
+A clinical review is required when:
+•	Diagnosis unclear
+•	Conflicting codes present
+•	Provider flagged as high-risk
+•	Member has unusual frequency history
+________________________________________
+3.3 Required Documentation Checklist
+•	Clinical notes
+•	ICD diagnosis
+•	CPT request code
+•	Previous imaging results
+•	Pain duration documentation
+________________________________________
+3.4 Authorization Case Categories
+•	Routine: 48–72 hour turnaround
+•	Expedited: Within 24 hours
+•	Urgent: Immediate review
+________________________________________
+3.5 Urgent vs Routine Requests
+Urgent requests must include:
+•	Reason for urgency
+•	Clinical deterioration risk
+________________________________________
+🧱 4.0 MEDICAL NECESSITY CRITERIA
+4.1 General Principles
+A procedure is medically necessary if:
+•	Clinically appropriate
+•	Not experimental
+•	Cost-effective
+•	Supported by clinical evidence
+________________________________________
+4.2 Condition-Specific Criteria
+CT Head (70450) requires:
+•	Acute trauma
+•	Neurological symptoms
+•	Loss of consciousness
+MRI Lumbar Spine (72148) requires:
+•	Radiculopathy
+•	Chronic low-back pain
+•	Progressive motor deficit
+________________________________________
+4.3 Red Flag Indicators
+Red flags include:
+•	Inconsistent ICD/CPT combination
+•	Sudden spike in provider billing
+•	Repetition within too short a period
+________________________________________
+4.4 ICD-to-CPT Link Table
+ICD Code	Description	Eligible CPT Codes
+S09.90XA	Head Injury	70450
+M54.4	Low Back Pain	72148
+R10.9	Abdominal Pain	76700
+________________________________________
+4.5 Common Reasons for Denial
+•	Missing PA
+•	Missing diagnosis
+•	Wrong CPT code
+•	Conflict in documentation
+________________________________________
+🧱 5.0 EXCEPTIONS & ESCALATIONS
+5.1 Automatic Escalation Triggers
+•	Missing PA
+•	Missing documentation
+•	High-risk provider
+•	Repeat high-cost claim
+________________________________________
+5.2 Duplicate Procedure Review
+Rules:
+•	Duplicate CPT in same day → deny
+•	Within restricted period → escalate
+________________________________________
+5.3 High-Risk Provider Behavior
+Flagged if:
+•	3 failed audits
+•	Above expected billing volume
+________________________________________
+5.4 Allowed Amount Overrides
+Allowed only with:
+•	Clinical justification
+•	Medical director approval
+________________________________________
+5.5 Medical Director Review
+Required for:
+•	Overrides
+•	Conflicting clinical documentation
+•	Experimental procedures
+________________________________________
+🧱 6.0 BILLING & DOCUMENTATION REQUIREMENTS
+6.1 Required Claim Elements
+•	Member ID
+•	Provider ID
+•	CPT & ICD codes
+•	Clinical notes
+•	PA number
+________________________________________
+6.2 PA Number Validation
+System checks:
+•	Format
+•	Expiration
+•	Matching provider
+•	Matching service date
+________________________________________
+6.3 Claim Error Categories
+•	Missing field
+•	Invalid code
+•	Wrong date
+•	Duplicate billing
+________________________________________
+6.4 Documentation Failure Tree
+If missing one of:
+•	ICD code → deny
+•	CPT code → deny
+•	Clinical note → escalate
+•	PA → escalate
+________________________________________
+🧱 7.0 SUMMARY TABLES
+7.1 Authorization Decision Matrix
+Condition	CPT Code	PA	Action
+Trauma	70450	No	Approve
+No trauma	70450	Yes	Require PA
+Back pain	72148	Yes	Approve
+No back pain	72148	Yes	Review
+________________________________________
+7.2 High-Cost Crosswalk Table
+Cost Range	Action
+$0–$500	Auto-Adjudicate
+$500–$1000	Validate Codes
+$1000–$2000	Clinical Review
+$2000+	Escalate
+________________________________________
+7.3 Imaging Necessity Grid
+Symptom	Imaging	Approved
+Neurological deficit	CT/MRI	Yes
+Mild headache	CT	No
+Chronic pain	MRI	Yes
+
