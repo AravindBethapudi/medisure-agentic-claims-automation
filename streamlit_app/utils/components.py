@@ -8,15 +8,12 @@ import os
 
 
 def load_css():
-    """Load global CSS file with correct path"""
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    css_path = os.path.join(current_dir, "..", "assets", "style.css")
-    
+    css_path = os.path.join(os.path.dirname(__file__), "..", "assets", "style.css")
     try:
-        with open(css_path) as css:
-            return f"<style>{css.read()}</style>"
+        with open(css_path) as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
     except FileNotFoundError:
-        return ""
+        pass  # fails silently if file missing
 
 
 def styled_success(title: str, message: str = ""):
