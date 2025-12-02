@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 import os
-from utils.components import styled_success, styled_error, styled_info, load_css
+from utils.components import styled_success, styled_error, styled_info
 from utils.state_manager import init_session_state, reset_state
 
 # -----------------------
@@ -15,6 +15,14 @@ st.set_page_config(
 )
 
 # Load custom CSS
+def load_css():
+    css_path = os.path.join(os.path.dirname(__file__), "assets", "style.css")
+    try:
+        with open(css_path) as f:
+            return f"<style>{f.read()}</style>"
+    except FileNotFoundError:
+        return "<style></style>"  # silent fallback
+
 st.markdown(load_css(), unsafe_allow_html=True)
 
 # -----------------------
@@ -55,7 +63,10 @@ styled_info(
     """
 )
 
+# Backend health check (using custom styled components)
+# NEW — works both locally and on Render
 # ─── BACKEND CONNECTION (works everywhere) ──────────────────────────────
+import os
 
 BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")  # local fallback
 
