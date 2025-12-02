@@ -13,7 +13,63 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
+def check_backend_status():
+    """Display backend connection status with styled components"""
+    try:
+        r = requests.get(f"{BACKEND_URL}/health", timeout=10)
+        if r.status_code == 200:
+            data = r.json()
+            st.success("🟢 **Backend Connected** - MediSure API (Render) is healthy and ready")
+            
+            # Show additional info if available
+            if isinstance(data, dict):
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric("Status", data.get("status", "healthy"))
+                with col2:
+                    st.metric("Service", data.get("service", "API"))
+                with col3:
+                    version = data.get("version", "N/A")
+                    st.metric("Version", version)
+            return True
+        else:
+            st.warning(f"⚠️ **Backend Warning** - Status {r.status_code}")
+            return False
+            
+    except requests.exceptions.Timeout:
+        st.error("🔴 **Backend Timeout** - Render backend is slow to respond")
+        st.info("⏳ Render free tier may take 30-60s to wake up from sleep")
+        
+        # Offer to wake it up
+        if st.button("🔄 Wake Up Backend", type="secondary"):
+            APIClient.wake_up_backend()
+            st.rerun()
+        return False
+        
+    except requests.exceptions.ConnectionError:
+        st.error("🔴 **Backend Offline** - Cannot reach Render backend")
+        with st.expander("🔧 Troubleshooting"):
+            st.markdown(f"""
+            **Backend URL:** `{BACKEND_URL}`
+            
+            **Quick Checks:**
+            1. Visit [{BACKEND_URL}/docs]({BACKEND_URL}/docs) - Should show API documentation
+            2. Visit [{BACKEND_URL}/health]({BACKEND_URL}/health) - Should return health status
+            3. Check [Render Dashboard](https://dashboard.render.com) - Verify service is running
+            
+            **Common Issues:**
+            - Service is sleeping (free tier) - Click "Wake Up Backend" button
+            - Service is restarting - Wait 1-2 minutes
+            - Deployment failed - Check Render logs
+            """)
+        
+        if st.button("🔄 Retry Connection", type="primary"):
+            st.rerun()
+        return False
+        
+    except Exception as e:
+        st.error(f"🔴 **Backend Error** - {str(e)}")
+        return False
 # Load custom CSS
 def load_css():
     css_path = os.path.join(os.path.dirname(__file__), "assets", "style.css")
