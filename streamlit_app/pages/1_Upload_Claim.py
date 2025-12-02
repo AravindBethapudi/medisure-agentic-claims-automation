@@ -1,14 +1,24 @@
 import streamlit as st
 from utils.api_client import APIClient
+from pathlib import Path
 from utils.components import styled_success, styled_error, styled_info
 
-# Page config
 st.set_page_config(page_title="Upload Claim", layout="wide")
 
-# Load global CSS
-with open("assets/style.css") as css:
-    st.markdown(f"<style>{css.read()}</style>", unsafe_allow_html=True)
+# Load global CSS - adjust path relative to project root
+css_path = Path("streamlit_app/assets/style.css")
 
+try:
+    with open(css_path) as css:
+        st.markdown(f"<style>{css.read()}</style>", unsafe_allow_html=True)
+except FileNotFoundError:
+    # Fallback: try relative to current file
+    try:
+        css_path = Path(__file__).parent.parent / "assets" / "style.css"
+        with open(css_path) as css:
+            st.markdown(f"<style>{css.read()}</style>", unsafe_allow_html=True)
+    except FileNotFoundError:
+        pass  # Continue without custom styles
 # Page Title
 st.title("📤 Upload Claim File")
 st.write("Upload a claim file in **JSON**, **XML**, or **PDF** format to begin processing.")
