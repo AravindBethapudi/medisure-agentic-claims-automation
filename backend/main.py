@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from backend.orchestrator.claims_orchestrator import ClaimsOrchestrator
+from orchestrator.claims_orchestrator import ClaimsOrchestrator
 
 
 app = FastAPI(
