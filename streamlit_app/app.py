@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import os
 from utils.components import styled_success, styled_error, styled_info, load_css
 from utils.state_manager import init_session_state, reset_state
 
@@ -54,13 +55,15 @@ styled_info(
     """
 )
 
-# Backend health check (using custom styled components)
+# ─── BACKEND CONNECTION (works everywhere) ──────────────────────────────
+
+BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")  # local fallback
+
 try:
-    backend = "http://127.0.0.1:8000/health"
-    r = requests.get(backend, timeout=1)
+    r = requests.get(f"{BACKEND_URL}/health", timeout=8)
     if r.status_code == 200:
-        styled_success("Backend API Connected", "FastAPI server is running and healthy.")
+        styled_success("Backend Connected", "MediSure API is healthy and ready")
     else:
-        styled_error("Backend Unhealthy", "Server reachable but returned an error.")
+        styled_error("Backend Warning", f"Status {r.status_code}")
 except Exception:
-    styled_error("Backend Not Running", "Start FastAPI using: <code>python run.py</code>")
+    styled_error("Backend Offline", f"Cannot reach API at {BACKEND_URL}")
