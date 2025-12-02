@@ -1,7 +1,7 @@
 import json
 import xml.etree.ElementTree as ET
 from typing import Dict, Any, List
-import pdfplumber  # Changed from fitz
+from pypdf import PdfReader
 
 
 class ExtractionAgent:
@@ -55,16 +55,16 @@ class ExtractionAgent:
         return result
     
     def _parse_pdf(self, file_bytes: bytes) -> Dict[str, Any]:
-        """Parse PDF claim file using pdfplumber."""
+        """Parse PDF claim file using pypdf."""
         import io
         
         try:
             text = ""
-            with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
-                for page in pdf.pages:
-                    page_text = page.extract_text()
-                    if page_text:
-                        text += page_text + "\n"
+            pdf_reader = PdfReader(io.BytesIO(file_bytes))
+            for page in pdf_reader.pages:
+                page_text = page.extract_text()
+                if page_text:
+                    text += page_text + "\n"
             
             # Extract structured data from text
             return self._extract_from_text(text)
