@@ -1,53 +1,32 @@
 import streamlit as st
+from utils.components import styled_success, styled_warning, styled_error, styled_info, decision_card, summary_card
 
 st.set_page_config(page_title="Color Test", layout="wide")
 
-st.title("🎨 Color Test Page")
+st.title("🎨 Color Test Page - BOLD COLORS")
 
-# Test 1: Direct inline HTML (this MUST work)
-st.markdown("""
-    <div style="
-        background-color: #d3f9d8;
-        border-left: 6px solid #2f9e44;
-        border-radius: 8px;
-        padding: 16px 20px;
-        margin: 10px 0;
-    ">
-        <span style="color: #2f9e44; font-size: 18px; font-weight: 600;">
-            ✅ SUCCESS - This should be GREEN
-        </span>
-    </div>
-""", unsafe_allow_html=True)
+# Test custom components
+styled_success("SUCCESS", "This should be BOLD GREEN with WHITE text")
+styled_warning("WARNING", "This should be BOLD ORANGE with WHITE text")
+styled_error("ERROR", "This should be BOLD RED with WHITE text")
+styled_info("INFO", "This should be BOLD BLUE with WHITE text")
 
-st.markdown("""
-    <div style="
-        background-color: #fff3cd;
-        border-left: 6px solid #e67700;
-        border-radius: 8px;
-        padding: 16px 20px;
-        margin: 10px 0;
-    ">
-        <span style="color: #e67700; font-size: 18px; font-weight: 600;">
-            ⚠️ WARNING - This should be ORANGE/YELLOW
-        </span>
-    </div>
-""", unsafe_allow_html=True)
+st.markdown("---")
 
-st.markdown("""
-    <div style="
-        background-color: #ffe0e0;
-        border-left: 6px solid #e03131;
-        border-radius: 8px;
-        padding: 16px 20px;
-        margin: 10px 0;
-    ">
-        <span style="color: #c92a2a; font-size: 18px; font-weight: 600;">
-            ❌ ERROR - This should be RED
-        </span>
-    </div>
-""", unsafe_allow_html=True)
+# Test decision card
+decision_card(
+    decision="MANUAL_REVIEW",
+    reason="Procedures require prior authorization: 80050",
+    confidence=0.85
+)
 
-# Test 2: Streamlit default (for comparison)
-st.success("Default Streamlit Success")
-st.warning("Default Streamlit Warning")
-st.error("Default Streamlit Error")
+# Test summary card
+summary_card(
+    claim_id="CLM-001",
+    patient="John Carter",
+    member_id="M12345678",
+    plan="PREMIUM",
+    amount=430.00,
+    decision="MANUAL_REVIEW",
+    reasons="Procedures require prior authorization: 80050"
+)

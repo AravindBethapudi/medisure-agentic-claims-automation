@@ -1,0 +1,300 @@
+MediSure Health – Claim Scenarios Guide (2025)
+Version: 1.0
+Last Updated: November 2025
+
+This document describes the synthetic claim files used in the MediSure Agentic Claims Automation project.
+Each scenario is designed to test specific behaviors of the system: extraction, validation, RAG retrieval, authorization logic, fraud detection, and error handling.
+
+1. Overview of Claim Files
+
+The following claim files are present in the repository under data/sample_claims/:
+
+claim_001.json
+
+claim_002.json
+
+claim_003.json
+
+claim_004.json
+
+claim_005.json
+
+claim_006.json
+
+claim_007.xml
+
+claim_008.xml
+
+claim_009.json
+
+claim_010.pdf
+
+The claims intentionally use different formats:
+
+JSON → modern API-style claims
+
+XML → legacy system claims
+
+PDF → uploaded/scan-style claims
+
+These reflect typical real-world inputs handled by healthcare claim engines.
+
+2. Standard Office Visit Scenarios
+
+2.1 claim_001.json – Office Visit + Lab Panel
+
+Format: JSON
+
+Patient: John Carter
+
+Procedures:
+
+99213 – Office Visit
+
+80050 – General Health Panel
+
+Total Amount: $430
+
+Purpose:
+
+Tests extraction of multiple procedures
+
+Validates office visit + lab combination
+
+Exercises policy rules around CPT 99213 and 80050, and frequency limits.
+
+2.2 claim_002.json – Simple Strep Test
+
+Format: JSON
+
+Patient: Sarah Johnson
+
+Procedures:
+
+87880 – Rapid Strep Test
+
+Total Amount: $85
+
+Purpose:
+
+Simple baseline claim
+
+Used as a “happy-path” scenario for automated approval
+
+Validates that low-cost, straightforward claims pass through with minimal checks.
+
+2.3 claim_003.json – ECG Visit
+
+Format: JSON
+
+Patient: Michael Lee
+
+Procedures:
+
+93000 – Electrocardiogram
+
+Total Amount: $120
+
+Purpose:
+
+Basic diagnostic service
+
+Tests extraction and mapping for ECG-related rules
+
+Can be used for future extensions like cardiac risk scenarios.
+
+3. High-Cost Imaging Scenarios
+
+3.1 claim_004.json – CT Head Scan (High Cost)
+
+Format: JSON
+
+Procedure:
+
+70450 – CT Head Scan
+
+Total Amount: $1500
+
+Purpose:
+
+Tests high-cost thresholds
+
+Triggers prior authorization and high-cost review logic
+
+Connects to imaging rules and diagnosis S09.90XA (head injury).
+
+3.2 claim_005.json – MRI Lumbar Spine (Very High Cost)
+
+Format: JSON
+
+Procedure:
+
+72148 – MRI Lumbar Spine
+
+Total Amount: $2300
+
+Purpose:
+
+Exercises high-cost procedure rules
+
+Validates medical necessity criteria for low-back pain
+
+Good candidate for authorization + RAG retrieval demonstration.
+
+3.3 claim_006.json – Abdominal Ultrasound + Lab Panel
+
+Format: JSON
+
+Procedures:
+
+76700 – Abdominal Ultrasound
+
+80050 – General Health Panel
+
+Total Amount: $1190
+
+Purpose:
+
+Multi-procedure, moderate-to-high cost claim
+
+Tests combination of imaging + lab + cost rules
+
+Useful for pipeline paths where some services may be auto-approved and others escalated.
+
+4. XML-Based Legacy Claims
+
+4.1 claim_007.xml – CT Head (XML Claim)
+
+Format: XML
+
+Procedure: 70450 – CT Head Scan
+
+Total Amount: $1200
+
+Purpose:
+
+Represents legacy or external partner claim format
+
+Tests XML parsing, data extraction, and normalization into internal schema
+
+Exercises the same authorization rules as JSON-based CT claims.
+
+4.2 claim_008.xml – MRI Spine (XML Claim)
+
+Format: XML
+
+Procedure: 72148 – MRI Lumbar Spine
+
+Total Amount: $2000
+
+Purpose:
+
+Similar to claim_005.json but using XML
+
+Used to verify consistent handling of rules regardless of input format
+
+Helps validate “format-agnostic” behavior of the extraction agent.
+
+5. Error and Edge-Case Scenarios
+
+5.1 claim_009.json – Missing Fields Claim
+
+Format: JSON
+
+Patient Name: null
+
+Provider ID: empty string
+
+Diagnosis Codes: empty list
+
+Purpose:
+
+Designed to test robustness of validation logic
+
+Confirms that missing critical fields trigger automatic escalation
+
+Useful for testing error reporting and structured error responses.
+
+5.2 claim_010.pdf – Fraud-Like Duplicate Billing
+
+Format: PDF
+
+Procedures (duplicated):
+
+99213 twice
+
+87880 twice
+
+Total Amount: $470
+
+Purpose:
+
+Simulates a classic duplicate billing pattern
+
+Designed to work with FWA rules from the Fraud, Waste & Abuse manual
+
+Tests PDF ingestion, OCR/text extraction, and duplicate-detection logic
+
+Ideal for fraud-scoring agent and SIU/escalation scenario demonstrations.
+
+6. How These Scenarios Are Used in the Agentic Pipeline
+
+Each claim scenario can be routed through different flows in the agentic system:
+
+Standard Claims (001–003)
+
+Test end-to-end “happy path” automation
+
+Validate extraction → RAG → decision
+
+High-Cost Claims (004–006)
+
+Exercise prior authorization logic
+
+Use RAG over authorization_rules_2025.docx
+
+Validate allowed amounts and frequency checks
+
+XML Claims (007–008)
+
+Validate multi-format ingestion
+
+Test the XML normalization stage before agent processing
+
+Error/Missing Fields (009)
+
+Validate defensive programming
+
+Ensures low-quality input doesn’t silently pass through the system
+
+Fraud-Like Claim (010)
+
+Connects directly to fraud_waste_abuse_2025.docx FWA rules
+
+Provides a realistic demo for fraud detection and escalation
+
+7. Future Extensions
+
+This guide can be extended as more synthetic claims are added, such as:
+
+Inpatient hospitalization scenarios
+
+Medication/pharmacy-related claims
+
+Telehealth-heavy claim sets
+
+Chronic condition utilization patterns
+
+Each new scenario should be:
+
+Created as an individual file in data/sample_claims/
+
+Documented in this guide with:
+
+Format
+
+Business purpose
+
+Technical purpose
+
+Expected pipeline behavior

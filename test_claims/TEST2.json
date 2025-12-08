@@ -1,0 +1,12 @@
+{
+    "claim_id": "CLM-2025-002",
+    "patient_name": "John Smith",
+    "member_id": "M99999999",
+    "claim_amount": 5000.00,
+    "service_date": "2025-01-01",
+    "diagnosis_codes": ["Z00.00"],
+    "procedure_codes": ["99999"],
+    "provider_name": "Dr. Fake Provider",
+    "expected_decision": "REJECT",
+    "expected_fraud": "HIGH"
+  }

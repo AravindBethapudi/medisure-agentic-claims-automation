@@ -1,0 +1,14 @@
+{
+    "claim_id": "CLM-002",
+    "format": "json",
+    "patient_name": "Sarah Johnson",
+    "member_id": "M55667788",
+    "provider_id": "PRV-4550",
+    "service_date": "2025-09-21",
+    "procedures": [
+      { "cpt_code": "87880", "description": "Strep Test", "cost": 85.00 }
+    ],
+    "diagnosis_codes": ["J02.9"],
+    "total_amount": 85.00
+  }
+  

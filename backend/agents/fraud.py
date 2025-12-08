@@ -1,273 +1,141 @@
-from typing import Dict, Any, List
-import json
-import os
-from datetime import datetime
-from pathlib import Path
-
+# backend/agents/fraud.py
+from utils.ollama_client import ask_llama
+import re
 
 class FraudDetectionAgent:
-    """
-    Detects potential fraud patterns in claims.
-    Uses configurable rules + mock historical data.
-    """
+    def __init__(self):
+        print("Hybrid Fraud Agent ready")
 
-    def __init__(self, rules_file: str | None = None):
-        print("🔧 Initializing Fraud Detection Agent...")
-
-        # ------------------------------------------------------------------
-        # Resolve data/fraud_rules.json relative to backend/ directory
-        # ------------------------------------------------------------------
-        backend_dir = Path(__file__).resolve().parents[1]   # .../backend
-        data_dir = backend_dir / "data"
-
-        if rules_file is None:
-            rules_path = data_dir / "fraud_rules.json"
-        else:
-            rules_path = Path(rules_file)
-
-        # Load fraud rules
-        if rules_path.exists():
-            with open(rules_path, "r") as f:
-                rules = json.load(f)
-                self.thresholds = rules.get("risk_thresholds", {})
-                self.red_flags = rules.get("red_flags", {})
-                self.high_risk_providers = rules.get("high_risk_providers", [])
-                self.suspicious_combos = rules.get(
-                    "suspicious_procedure_combinations", []
-                )
-            print(f"✅ Loaded fraud rules from {rules_path}")
-        else:
-            print(f"⚠️ Fraud rules file not found: {rules_path}")
-            self.thresholds = {"low": 0.3, "medium": 0.7, "high": 0.9}
-            self.red_flags = {}
-            self.high_risk_providers = []
-            self.suspicious_combos = []
-
-        # Mock historical claims database
-        self.historical_claims = self._load_mock_history()
-        print("✅ Fraud Detection Agent ready")
-
-    # ------------------------------------------------------------------
-    # MOCK HISTORY
-    # ------------------------------------------------------------------
-    def _load_mock_history(self) -> List[Dict[str, Any]]:
-        """Mock historical claims (used for duplicate + pattern checks)."""
-        return [
-            {
-                "claim_id": "CLM-OLD-001",
-                "member_id": "M12345678",
-                "procedure_codes": ["99213"],
-                "total_amount": 150.0,
-                "date_of_service": "2025-09-15",
-                "provider_id": "PRV-9001",
-            },
-            {
-                "claim_id": "CLM-OLD-002",
-                "member_id": "M12345678",
-                "procedure_codes": ["99213"],
-                "total_amount": 155.0,
-                "date_of_service": "2025-10-01",
-                "provider_id": "PRV-9001",
-            },
-        ]
-
-    # ------------------------------------------------------------------
-    # MAIN FRAUD DETECTION ENTRY POINT
-    # ------------------------------------------------------------------
-    def detect(self, claim_data: Dict[str, Any]) -> Dict[str, Any]:
+    def detect(self, claim_data: dict) -> dict:
         """
-        Master fraud detection function.
-        Runs all checks and produces a final risk score + decision.
+        Enhanced fraud detection with multiple rule checks
         """
+        amount = claim_data.get("claim_amount", 0)
+        diagnosis_codes = claim_data.get("diagnosis_codes", [])
+        procedure_codes = claim_data.get("procedure_codes", [])
+        provider_name = claim_data.get("provider_name", "")
+        service_date = claim_data.get("service_date", "")
+        
+        risk = 0.0
+        flags = []
 
-        fraud_checks = {
-            "duplicate_check": self._check_duplicates(claim_data),
-            "amount_check": self._check_unusual_amount(claim_data),
-            "provider_check": self._check_high_risk_provider(claim_data),
-            "pattern_check": self._check_suspicious_patterns(claim_data),
-            "volume_check": self._check_claim_volume(claim_data),
-        }
+        # Rule 1: High claim amounts
+        if amount > 10000:
+            risk += 0.7
+            flags.append("Extremely high amount (>$10,000)")
+        elif amount > 5000:
+            risk += 0.5
+            flags.append("Very high amount (>$5,000)")
+        elif amount > 2000:
+            risk += 0.2
+            flags.append("High amount (>$2,000)")
 
-        # Combine risk contributions
-        risk_score = self._calculate_risk_score(fraud_checks)
-        risk_level = self._risk_level_from_score(risk_score)
+        # Rule 2: Suspicious keywords
+        claim_text = str(claim_data).lower()
+        suspicious_keywords = ["cash", "urgent", "emergency", "immediate", "rush"]
+        for keyword in suspicious_keywords:
+            if keyword in claim_text:
+                risk += 0.2
+                flags.append(f"Suspicious keyword: '{keyword}'")
+
+        # Rule 3: Invalid or missing codes
+        if not diagnosis_codes or len(diagnosis_codes) == 0:
+            risk += 0.3
+            flags.append("Missing diagnosis codes")
+        
+        if not procedure_codes or len(procedure_codes) == 0:
+            risk += 0.3
+            flags.append("Missing procedure codes")
+
+        # Rule 4: Duplicate procedure codes
+        if len(procedure_codes) != len(set(procedure_codes)):
+            risk += 0.4
+            flags.append("Duplicate procedure codes detected")
+
+        # Rule 5: Suspicious provider patterns
+        if not provider_name or provider_name.lower() == "unknown":
+            risk += 0.3
+            flags.append("Missing or unknown provider")
+        elif "fake" in provider_name.lower():
+            risk += 0.8
+            flags.append("Suspicious provider name")
+
+        # Rule 6: Invalid diagnosis codes (basic check)
+        for code in diagnosis_codes:
+            if not re.match(r'^[A-Z]\d{2}\.?\d*$', str(code)):
+                risk += 0.2
+                flags.append(f"Invalid diagnosis code format: {code}")
+
+        # Rule 7: Invalid procedure codes (should be 5 digits)
+        for code in procedure_codes:
+            if not re.match(r'^\d{5}$', str(code)):
+                risk += 0.2
+                flags.append(f"Invalid procedure code format: {code}")
+
+        # Rule 8: Weekend/holiday fraud pattern (optional - simplified)
+        if service_date:
+            # You can enhance this with actual holiday checking
+            pass
+
+        # Rule 9: Round numbers (potential fraud indicator)
+        if amount > 0 and amount % 1000 == 0:
+            risk += 0.1
+            flags.append("Suspiciously round amount")
+
+        # Cap risk at 1.0
+        risk = min(risk, 1.0)
+
+        # LLM second opinion if suspicious
+        if risk > 0.3:
+            messages = [
+                {
+                    "role": "system",
+                    "content": "You are a medical claims fraud expert. Analyze this claim and return ONLY a JSON object with: {\"fraud_likely\": true/false, \"confidence\": 0.0-1.0, \"reasoning\": \"brief explanation\"}"
+                },
+                {
+                    "role": "user",
+                    "content": f"""Analyze this claim for fraud:
+Amount: ${amount}
+Provider: {provider_name}
+Diagnosis Codes: {diagnosis_codes}
+Procedure Codes: {procedure_codes}
+Service Date: {service_date}
+
+Current risk flags: {flags}
+Current risk score: {risk}
+
+Is this claim likely fraudulent?"""
+                }
+            ]
+            
+            try:
+                llm_out = ask_llama(messages)
+                # Parse LLM response
+                if "true" in llm_out.lower() and "fraud_likely" in llm_out.lower():
+                    risk = max(risk, 0.8)
+                    flags.append("LLM detected suspicious patterns")
+            except:
+                pass  # If LLM fails, continue with rule-based result
+
+        # Determine risk level
+        if risk >= 0.7:
+            level = "HIGH"
+        elif risk >= 0.4:
+            level = "MEDIUM"
+        else:
+            level = "LOW"
+
+        # Recommendation
+        if risk >= 0.6:
+            recommendation = "MANUAL_REVIEW"
+        elif risk >= 0.4:
+            recommendation = "NEEDS_REVIEW"
+        else:
+            recommendation = "APPROVE"
 
         return {
-            "risk_score": round(risk_score, 3),
-            "risk_level": risk_level,
-            "fraud_checks": fraud_checks,
-            "red_flags": self._collect_red_flags(fraud_checks),
-            "recommendation": self._recommendation_from_risk(risk_level),
+            "risk_score": round(risk, 2),
+            "risk_level": level,
+            "red_flags": flags,
+            "recommendation": recommendation
         }
-
-    # ------------------------------------------------------------------
-    # INDIVIDUAL FRAUD CHECKS
-    # ------------------------------------------------------------------
-    def _check_duplicates(self, claim_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect potential duplicate claims."""
-        member_id = claim_data.get("patient", {}).get("member_id")
-        procedures = claim_data.get("procedure_codes", [])
-        date_service = claim_data.get("date_of_service")
-
-        if not member_id or not date_service:
-            return {"status": "SKIPPED", "reason": "Missing member ID or date"}
-
-        duplicate_days = self.red_flags.get("duplicate_claim_within_days", 30)
-        duplicates = []
-
-        try:
-            current = datetime.strptime(date_service, "%Y-%m-%d")
-        except Exception:
-            return {"status": "SKIPPED", "reason": "Invalid date format"}
-
-        for old in self.historical_claims:
-            if old["member_id"] == member_id and old["procedure_codes"] == procedures:
-                old_date = datetime.strptime(old["date_of_service"], "%Y-%m-%d")
-                diff = abs((current - old_date).days)
-
-                if diff <= duplicate_days:
-                    duplicates.append(
-                        {"claim_id": old["claim_id"], "days_diff": diff}
-                    )
-
-        if duplicates:
-            return {
-                "status": "FLAGGED",
-                "reason": f"Duplicate claim found within {duplicate_days} days",
-                "duplicate_claims": duplicates,
-                "risk_contribution": 0.4,
-            }
-
-        return {"status": "PASSED", "risk_contribution": 0.0}
-
-    def _check_unusual_amount(self, claim_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check for suspicious increases in billed amount."""
-        amount = claim_data.get("total_amount", 0)
-        member_id = claim_data.get("patient", {}).get("member_id")
-
-        previous_claims = [
-            c for c in self.historical_claims if c["member_id"] == member_id
-        ]
-
-        if not previous_claims:
-            return {
-                "status": "PASSED",
-                "reason": "No history",
-                "risk_contribution": 0.0,
-            }
-
-        avg = sum(c["total_amount"] for c in previous_claims) / len(previous_claims)
-        deviation = amount / avg if avg else 1
-        max_dev = self.red_flags.get("max_amount_deviation", 3.0)
-
-        if deviation > max_dev:
-            return {
-                "status": "FLAGGED",
-                "reason": f"Amount is {deviation:.1f}x higher than historical avg",
-                "deviation": deviation,
-                "risk_contribution": 0.3,
-            }
-
-        return {"status": "PASSED", "risk_contribution": 0.0}
-
-    def _check_high_risk_provider(self, claim_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect providers previously involved in fraud cases."""
-        provider_id = claim_data.get("provider", {}).get("id")
-
-        if not provider_id:
-            return {"status": "SKIPPED", "reason": "No provider ID"}
-
-        if provider_id in self.high_risk_providers:
-            return {
-                "status": "FLAGGED",
-                "reason": f"Provider {provider_id} has fraud history",
-                "risk_contribution": 0.5,
-            }
-
-        return {"status": "PASSED", "risk_contribution": 0.0}
-
-    def _check_suspicious_patterns(self, claim_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check suspicious combinations (upcoding, bundling)."""
-        procs = claim_data.get("procedure_codes", [])
-
-        max_procs = self.red_flags.get("max_procedures_per_claim", 10)
-        if len(procs) > max_procs:
-            return {
-                "status": "FLAGGED",
-                "reason": "Too many procedures",
-                "risk_contribution": 0.2,
-            }
-
-        for combo in self.suspicious_combos:
-            if all(c in procs for c in combo):
-                return {
-                    "status": "FLAGGED",
-                    "reason": f"Suspicious combination: {', '.join(combo)}",
-                    "risk_contribution": 0.2,
-                }
-
-        return {"status": "PASSED", "risk_contribution": 0.0}
-
-    def _check_claim_volume(self, claim_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check if member is filing too many claims."""
-        member_id = claim_data.get("patient", {}).get("member_id")
-        date_service = claim_data.get("date_of_service")
-
-        if not date_service:
-            return {"status": "SKIPPED", "reason": "Missing service date"}
-
-        try:
-            current = datetime.strptime(date_service, "%Y-%m-%d")
-        except Exception:
-            return {"status": "SKIPPED", "reason": "Invalid date format"}
-
-        recent = 0
-        for old in self.historical_claims:
-            if old["member_id"] == member_id:
-                old_date = datetime.strptime(old["date_of_service"], "%Y-%m-%d")
-                days = (current - old_date).days
-                if 0 <= days <= 30:
-                    recent += 1
-
-        if recent > 5:
-            return {
-                "status": "FLAGGED",
-                "reason": f"{recent} claims in last 30 days",
-                "risk_contribution": 0.2,
-            }
-
-        return {"status": "PASSED", "risk_contribution": 0.0}
-
-    # ------------------------------------------------------------------
-    # RISK SCORING + DECISIONING
-    # ------------------------------------------------------------------
-    def _calculate_risk_score(self, checks: Dict[str, Any]) -> float:
-        score = 0.0
-        for result in checks.values():
-            score += result.get("risk_contribution", 0.0)
-        return min(1.0, score)
-
-    def _risk_level_from_score(self, score: float) -> str:
-        if score >= self.thresholds.get("high", 0.9):
-            return "HIGH"
-        if score >= self.thresholds.get("medium", 0.7):
-            return "MEDIUM"
-        if score >= self.thresholds.get("low", 0.3):
-            return "LOW"
-        return "MINIMAL"
-
-    def _collect_red_flags(self, checks: Dict[str, Any]) -> List[str]:
-        flags = []
-        for result in checks.values():
-            if result.get("status") == "FLAGGED":
-                flags.append(result.get("reason", "Unknown issue"))
-        return flags
-
-    def _recommendation_from_risk(self, risk: str) -> str:
-        mapping = {
-            "MINIMAL": "Clear - proceed with payment.",
-            "LOW": "Minor indicators - normal review.",
-            "MEDIUM": "Moderate indicators - enhanced review advised.",
-            "HIGH": "High fraud risk - immediate investigation required.",
-        }
-        return mapping.get(risk, "Unknown risk level")

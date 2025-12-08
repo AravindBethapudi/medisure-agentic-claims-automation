@@ -1,0 +1,12 @@
+{
+    "claim_id": "CLM-2025-003",
+    "patient_name": "Alice Brown",
+    "member_id": "M11111111",
+    "claim_amount": 150.00,
+    "service_date": "2025-03-10",
+    "diagnosis_codes": ["Z00.00"],
+    "procedure_codes": ["99213"],
+    "provider_name": "Dr. Good Doctor",
+    "expected_decision": "APPROVE",
+    "expected_fraud": "LOW"
+  }

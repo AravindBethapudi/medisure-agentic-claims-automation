@@ -1,0 +1,16 @@
+<claim>
+  <claim_id>CLM-008</claim_id>
+  <format>xml</format>
+  <patient_name>Emily Watson</patient_name>
+  <member_id>M78221155</member_id>
+  <provider_id>PRV-8844</provider_id>
+  <service_date>2025-06-14</service_date>
+  <procedure>
+    <cpt_code>72148</cpt_code>
+    <description>MRI Lumbar Spine</description>
+    <cost>2000.00</cost>
+  </procedure>
+  <diagnosis_codes>M54.4</diagnosis_codes>
+  <total_amount>2000.00</total_amount>
+</claim>
+

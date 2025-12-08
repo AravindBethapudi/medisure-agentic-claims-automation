@@ -1,0 +1,24 @@
+Claim ID: CLM-010
+Format: PDF
+
+Patient Name: Robert Diaz
+Member ID: M66778899
+Provider ID: PRV-0022
+Service Date: 2025-10-25
+
+Procedures:
+ - CPT 99213 — Office Visit — $150
+ - CPT 99213 — Office Visit — $150 (duplicate)
+ - CPT 87880 — Strep Test — $85
+ - CPT 87880 — Strep Test — $85 (duplicate)
+
+Diagnostic Codes:
+ - J02.9
+
+Total Amount Billed: $470
+
+Notes:
+ - Same procedure billed twice.
+ - Pattern matches duplicate billing fraud.
+ - Provider flagged for previous anomalies.
+

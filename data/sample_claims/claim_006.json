@@ -1,0 +1,16 @@
+{
+    "claim_id": "CLM-006",
+    "format": "json",
+    "patient_name": "Mark Lewis",
+    "member_id": "M88776655",
+    "provider_id": "PRV-7712",
+    "service_date": "2025-11-10",
+    "procedures": [
+      { "cpt_code": "76700", "description": "Abdominal Ultrasound", "cost": 890.00 },
+      { "cpt_code": "80050", "description": "Health Panel", "cost": 300.00 }
+    ],
+    "diagnosis_codes": ["R10.9"],
+    "total_amount": 1190.00
+  }
+
+  

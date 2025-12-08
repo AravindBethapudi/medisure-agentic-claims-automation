@@ -1,0 +1,14 @@
+{
+    "claim_id": "CLM-009",
+    "format": "json",
+    "patient_name": null,
+    "member_id": "M11223344",
+    "provider_id": "",
+    "service_date": "2025-10-05",
+    "procedures": [
+      { "cpt_code": "99214", "description": "Office Visit — Extended", "cost": 210.00 }
+    ],
+    "diagnosis_codes": [],
+    "total_amount": 210.00
+  }
+  

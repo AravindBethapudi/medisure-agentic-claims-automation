@@ -1,0 +1,15 @@
+<claim>
+  <claim_id>CLM-007</claim_id>
+  <format>xml</format>
+  <patient_name>Laura Adams</patient_name>
+  <member_id>M44112277</member_id>
+  <provider_id>PRV-6001</provider_id>
+  <service_date>2025-07-09</service_date>
+  <procedure>
+    <cpt_code>70450</cpt_code>
+    <description>CT Head Scan</description>
+    <cost>1200.00</cost>
+  </procedure>
+  <diagnosis_codes>S09.90XA</diagnosis_codes>
+  <total_amount>1200.00</total_amount>
+</claim>

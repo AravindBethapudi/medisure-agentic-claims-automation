@@ -1,0 +1,9 @@
+[
+  {
+    "file": "TEST1.json",
+    "decision": "APPROVE",
+    "fraud_risk": "LOW",
+    "amount": 285,
+    "patient": "Emma Johnson"
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "total_tested": 3,
+  "decision_accuracy": 100.0,
+  "fraud_accuracy": 100.0,
+  "results": [
+    {
+      "file": "TEST1.json",
+      "expected_decision": "APPROVE",
+      "actual_decision": "APPROVE",
+      "decision_correct": true,
+      "expected_fraud": "LOW",
+      "actual_fraud": "LOW",
+      "fraud_correct": true
+    },
+    {
+      "file": "TEST2.json",
+      "expected_decision": "REJECT",
+      "actual_decision": "REJECT",
+      "decision_correct": true,
+      "expected_fraud": "HIGH",
+      "actual_fraud": "HIGH",
+      "fraud_correct": true
+    },
+    {
+      "file": "TEST3.json",
+      "expected_decision": "APPROVE",
+      "actual_decision": "APPROVE",
+      "decision_correct": true,
+      "expected_fraud": "LOW",
+      "actual_fraud": "LOW",
+      "fraud_correct": true
+    }
+  ]
+}

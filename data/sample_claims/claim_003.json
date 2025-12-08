@@ -1,0 +1,14 @@
+{
+    "claim_id": "CLM-003",
+    "format": "json",
+    "patient_name": "Michael Lee",
+    "member_id": "M99887766",
+    "provider_id": "PRV-2211",
+    "service_date": "2025-11-02",
+    "procedures": [
+      { "cpt_code": "93000", "description": "Electrocardiogram", "cost": 120.00 }
+    ],
+    "diagnosis_codes": ["R07.9"],
+    "total_amount": 120.00
+  }
+  

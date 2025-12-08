@@ -1,0 +1,14 @@
+{
+    "claim_id": "CLM-004",
+    "format": "json",
+    "patient_name": "Kevin Brooks",
+    "member_id": "M88442211",
+    "provider_id": "PRV-3021",
+    "service_date": "2025-10-18",
+    "procedures": [
+      { "cpt_code": "70450", "description": "CT Head Scan", "cost": 1500.00 }
+    ],
+    "diagnosis_codes": ["S09.90XA"],
+    "total_amount": 1500.00
+  }
+  

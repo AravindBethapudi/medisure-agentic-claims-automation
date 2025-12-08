@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from orchestrator.claims_orchestrator import ClaimsOrchestrator
+from orchestrator.claims_orchestrator import process_claim as orchestrator_process_claim
 
 
 app = FastAPI(
@@ -7,9 +7,6 @@ app = FastAPI(
     version="1.0.0",
     description="Backend service for the MediSure Agentic Claims Automation System"
 )
-
-# Initialize Orchestrator (handles all agents)
-orchestrator = ClaimsOrchestrator()
 
 @app.get("/")
 def root():
@@ -25,15 +22,15 @@ def health_check():
     return {"status": "ok", "message": "MediSure Claims API is running"}
 
 @app.post("/process-claim")
-async def process_claim(file: UploadFile = File(...)):
+async def process_claim_endpoint(file: UploadFile = File(...)):
     try:
         file_bytes = await file.read()
 
         if not file_bytes:
             raise HTTPException(status_code=400, detail="Uploaded file is empty")
 
-        # 🔥 Single orchestrator call
-        result = orchestrator.process_claim(file_bytes, file.content_type, file.filename)
+        # Call the orchestrator function
+        result = orchestrator_process_claim(file_bytes, file.content_type, file.filename)
 
         return result
 

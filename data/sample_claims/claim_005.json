@@ -1,0 +1,14 @@
+{
+    "claim_id": "CLM-005",
+    "format": "json",
+    "patient_name": "Rachel Kim",
+    "member_id": "M22991155",
+    "provider_id": "PRV-9982",
+    "service_date": "2025-08-13",
+    "procedures": [
+      { "cpt_code": "72148", "description": "MRI Lumbar Spine", "cost": 2300.00 }
+    ],
+    "diagnosis_codes": ["M54.4"],
+    "total_amount": 2300.00
+  }
+  

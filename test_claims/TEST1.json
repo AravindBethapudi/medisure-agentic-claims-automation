@@ -1,0 +1,13 @@
+
+{
+    "claim_id": "CLM-2025-001",
+    "patient_name": "Emma Johnson",
+    "member_id": "M12345678",
+    "claim_amount": 285.00,
+    "service_date": "2025-03-15",
+    "diagnosis_codes": ["J45.909", "Z79.899"],
+    "procedure_codes": ["99214", "94640"],
+    "provider_name": "Dr. Sarah Williams",
+    "expected_decision": "APPROVE",
+    "expected_fraud": "LOW"
+  }
