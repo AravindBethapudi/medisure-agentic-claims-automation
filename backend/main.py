@@ -1,9 +1,23 @@
-# backend/main.py - WITH MONITORING
+# backend/main.py - FIXED FOR DEPLOYMENT
+import sys
+import os
+
+# Fix Python path for deployment
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import PlainTextResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from backend.orchestrator.claims_orchestrator import process_claim as orchestrator_process_claim
-from backend.utils.monitoring import monitor
+
+# Try both import styles (works everywhere)
+try:
+    # For deployment (Render, etc.)
+    from backend.orchestrator.claims_orchestrator import process_claim as orchestrator_process_claim
+    from backend.utils.monitoring import monitor
+except ImportError:
+    # For local development
+    from .orchestrator.claims_orchestrator import process_claim as orchestrator_process_claim
+    from .utils.monitoring import monitor
 
 app = FastAPI(
     title="MediSure Agentic Claims API",
@@ -110,7 +124,10 @@ def reset_metrics():
     Reset all metrics (useful for testing)
     """
     global monitor
-    from utils.monitoring import ClaimsMonitor
+    try:
+        from backend.utils.monitoring import ClaimsMonitor
+    except ImportError:
+        from .utils.monitoring import ClaimsMonitor
     monitor = ClaimsMonitor()
     return {"message": "Metrics reset successfully"}
 
