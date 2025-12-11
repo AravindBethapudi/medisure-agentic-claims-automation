@@ -23,7 +23,7 @@ if result is None:
     st.stop()
 
 validation = result.get("validation", {})
-validation_results = validation.get("validation_results", {})
+validation_results = validation.get("details", {})
 
 
 def status_box(title, result_dict):
