@@ -1,4 +1,5 @@
 streamlit==1.39.0
 requests
 pydantic==2.10.2
-python-dotenv  # if you use .env files
+python-dotenv  
+reportlab==4.0.7# if you use .env files

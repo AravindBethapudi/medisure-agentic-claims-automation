@@ -1,224 +1,112 @@
-"""
-Custom styled components for MediSure UI
-BOLD, VIBRANT colors that are easy to read
-"""
-
 import streamlit as st
-import os
+from utils.components import styled_success, styled_info, load_css, section_header
+from .pdf_generator import PatientLetterPDF
 
+st.set_page_config(page_title="Extracted Data", layout="wide")
+st.markdown(load_css(), unsafe_allow_html=True)
 
-def load_css():
-    css_path = os.path.join(os.path.dirname(__file__), "..", "assets", "style.css")
-    try:
-        with open(css_path) as f:
-            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-    except FileNotFoundError:
-        pass  # fails silently if file missing
+section_header("🧾 Extracted Claim Data")
 
+# Check if we have extracted data
+if "EXTRACTED_DATA" not in st.session_state or not st.session_state.EXTRACTED_DATA:
+    styled_error("No Data Available", "Please upload a claim file first.")
+    st.page_link("pages/1_Upload_Claim.py", label="Go to Upload Claim")
+    st.stop()
 
-def styled_success(title: str, message: str = ""):
-    """BOLD GREEN success box"""
-    st.markdown(f"""
-        <div style="
-            background-color: #22c55e;
-            border-left: 8px solid #15803d;
-            border-radius: 8px;
-            padding: 18px 22px;
-            margin: 12px 0;
-        ">
-            <span style="color: #ffffff; font-size: 18px; font-weight: 700;">
-                ✅ {title}
-            </span>
-            {f'<p style="color: #ffffff; margin: 10px 0 0 0; font-size: 15px; font-weight: 500;">{message}</p>' if message else ''}
-        </div>
-    """, unsafe_allow_html=True)
+data = st.session_state.EXTRACTED_DATA
 
+# Display Key Details
+st.subheader("📌 Key Details")
+col1, col2 = st.columns(2)
 
-def styled_warning(title: str, message: str = ""):
-    """BOLD ORANGE warning box"""
-    st.markdown(f"""
-        <div style="
-            background-color: #f59e0b;
-            border-left: 8px solid #d97706;
-            border-radius: 8px;
-            padding: 18px 22px;
-            margin: 12px 0;
-        ">
-            <span style="color: #ffffff; font-size: 18px; font-weight: 700;">
-                ⚠️ {title}
-            </span>
-            {f'<p style="color: #ffffff; margin: 10px 0 0 0; font-size: 15px; font-weight: 500;">{message}</p>' if message else ''}
-        </div>
-    """, unsafe_allow_html=True)
+with col1:
+    st.markdown(f"**Claim ID:** `{data.get('claim_id', 'N/A')}`")
+    st.markdown(f"**Patient:** {data.get('patient_name', 'N/A')}")
+    st.markdown(f"**Member ID:** `{data.get('member_id', 'N/A')}`")
+    st.markdown(f"**Provider:** {data.get('provider_name', 'N/A')}")
 
+with col2:
+    st.markdown(f"**Provider ID:** {data.get('provider_id', 'N/A')}")
+    st.markdown(f"**Service Date:** {data.get('service_date', 'N/A')}")
+    st.markdown(f"**Total Amount:** `${data.get('claim_amount', 0):,.2f}`")
+    st.markdown(f"**Plan Type:** {data.get('plan_type', 'N/A')}")
 
-def styled_error(title: str, message: str = ""):
-    """BOLD RED error box"""
-    st.markdown(f"""
-        <div style="
-            background-color: #ef4444;
-            border-left: 8px solid #b91c1c;
-            border-radius: 8px;
-            padding: 18px 22px;
-            margin: 12px 0;
-        ">
-            <span style="color: #ffffff; font-size: 18px; font-weight: 700;">
-                ❌ {title}
-            </span>
-            {f'<p style="color: #ffffff; margin: 10px 0 0 0; font-size: 15px; font-weight: 500;">{message}</p>' if message else ''}
-        </div>
-    """, unsafe_allow_html=True)
+st.divider()
 
+# Clinical Information with Code Descriptions
+section_header("🔬 Clinical Information")
 
-def styled_info(title: str, message: str = ""):
-    """BOLD BLUE info box"""
-    st.markdown(f"""
-        <div style="
-            background-color: #3b82f6;
-            border-left: 8px solid #1d4ed8;
-            border-radius: 8px;
-            padding: 18px 22px;
-            margin: 12px 0;
-        ">
-            <span style="color: #ffffff; font-size: 18px; font-weight: 700;">
-                ℹ️ {title}
-            </span>
-            {f'<p style="color: #ffffff; margin: 10px 0 0 0; font-size: 15px; font-weight: 500;">{message}</p>' if message else ''}
-        </div>
-    """, unsafe_allow_html=True)
-
-
-def decision_card(decision: str, reason: str, confidence: float = None):
-    """
-    Final claim decision card with BOLD colors
-    decision: APPROVE, REJECT, or MANUAL_REVIEW
-    """
-    styles = {
-        "APPROVE": {
-            "bg": "#22c55e",
-            "border": "#15803d", 
-            "text": "#ffffff",
-            "icon": "✅"
-        },
-        "REJECT": {
-            "bg": "#ef4444",
-            "border": "#b91c1c",
-            "text": "#ffffff",
-            "icon": "❌"
-        },
-        "MANUAL_REVIEW": {
-            "bg": "#f59e0b",
-            "border": "#d97706",
-            "text": "#ffffff",
-            "icon": "⚠️"
-        }
-    }
+# Check if we have the new clinical information structure
+if 'clinical_information' in data:
+    clinical_info = data['clinical_information']
     
-    style = styles.get(decision, styles["MANUAL_REVIEW"])
+    # Diagnosis Codes with Descriptions
+    diagnoses = clinical_info.get('diagnoses', [])
+    if diagnoses:
+        st.subheader("📋 Diagnosis Codes")
+        for diag in diagnoses:
+            with st.container():
+                col1, col2, col3 = st.columns([1, 3, 2])
+                with col1:
+                    st.markdown(f"**`{diag.get('code', 'N/A')}`**")
+                with col2:
+                    st.write(diag.get('description', 'No description available'))
+                with col3:
+                    st.caption(f"*{diag.get('category', 'General')}*")
+            st.divider()
     
-    confidence_html = ""
-    if confidence is not None:
-        confidence_html = f'<p style="color: {style["text"]}; margin: 8px 0 0 0; font-size: 14px; font-weight: 500;">Confidence: {confidence:.0%}</p>'
+    # Procedure Codes with Descriptions
+    procedures = clinical_info.get('procedures', [])
+    if procedures:
+        st.subheader("💉 Procedure Codes")
+        for proc in procedures:
+            with st.container():
+                col1, col2, col3 = st.columns([1, 3, 2])
+                with col1:
+                    st.markdown(f"**`{proc.get('code', 'N/A')}`**")
+                with col2:
+                    desc = proc.get('description', 'No description available')
+                    # Truncate very long descriptions
+                    if len(desc) > 150:
+                        desc = desc[:150] + "..."
+                    st.write(desc)
+                with col3:
+                    st.caption(f"*{proc.get('category', 'General')}*")
+            st.divider()
     
-    st.markdown(f"""
-        <div style="
-            background-color: {style['bg']};
-            border-left: 8px solid {style['border']};
-            border-radius: 10px;
-            padding: 22px 26px;
-            margin: 16px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        ">
-            <h3 style="color: {style['text']}; margin: 0 0 12px 0; font-size: 22px; font-weight: 700;">
-                {style['icon']} Final Decision: {decision}
-            </h3>
-            <p style="color: {style['text']}; margin: 0; font-size: 16px; font-weight: 500;">
-                <strong>Reason:</strong> {reason}
-            </p>
-            {confidence_html}
-        </div>
-    """, unsafe_allow_html=True)
+    # Clinical Summary
+    clinical_summary = clinical_info.get('summary')
+    if clinical_summary:
+        with st.expander("📊 Clinical Summary", expanded=False):
+            st.write(clinical_summary)
 
-
-def summary_card(claim_id: str, patient: str, member_id: str, plan: str, amount: float, decision: str, reasons: str):
-    """Executive summary card with BOLD colors"""
+else:
+    # Fallback to old format
+    col_diag, col_proc = st.columns(2)
     
-    # Choose background based on decision
-    if decision == "APPROVE":
-        bg_color = "#dcfce7"
-        border_color = "#22c55e"
-        text_color = "#166534"
-        icon = "✅"
-    elif decision == "REJECT":
-        bg_color = "#fee2e2"
-        border_color = "#ef4444"
-        text_color = "#991b1b"
-        icon = "❌"
-    else:  # MANUAL_REVIEW
-        bg_color = "#fef3c7"
-        border_color = "#f59e0b"
-        text_color = "#92400e"
-        icon = "⚠️"
+    with col_diag:
+        st.subheader("📋 Diagnosis Codes")
+        diag_codes = data.get('diagnosis_codes', [])
+        if diag_codes:
+            for i, code in enumerate(diag_codes):
+                st.write(f"{i}: `{code}`")
+        else:
+            st.info("No diagnosis codes extracted")
     
-    st.markdown(f"""
-        <div style="
-            background-color: {bg_color};
-            border: 3px solid {border_color};
-            border-radius: 12px;
-            padding: 22px;
-            margin: 16px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        ">
-            <h4 style="color: {text_color}; margin: 0 0 14px 0; font-size: 20px; font-weight: 700;">
-                📋 Executive Summary
-            </h4>
-            <p style="color: {text_color}; margin: 8px 0; font-size: 17px; font-weight: 700;">
-                {icon} CLAIM {claim_id} — {decision}
-            </p>
-            <p style="color: {text_color}; margin: 6px 0; font-size: 15px; font-weight: 600;">
-                Patient: {patient} (Member ID: {member_id}) Plan: {plan}
-            </p>
-            <p style="color: {text_color}; margin: 6px 0; font-size: 15px; font-weight: 600;">
-                Total Amount: ${amount:,.2f}
-            </p>
-            <p style="color: {text_color}; margin: 12px 0 0 0; font-size: 15px; font-weight: 600;">
-                <strong>Decision:</strong> {decision}. {reasons}
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
+    with col_proc:
+        st.subheader("💉 Procedure Codes")
+        proc_codes = data.get('procedure_codes', [])
+        if proc_codes:
+            for i, code in enumerate(proc_codes):
+                st.write(f"{i}: `{code}`")
+        else:
+            st.info("No procedure codes extracted")
 
+st.divider()
 
-def section_header(title: str, icon: str = "📌"):
-    """Bold section header"""
-    st.markdown(f"""
-        <h2 style="
-            color: #1e3a5f;
-            font-size: 24px;
-            font-weight: 700;
-            margin: 20px 0 10px 0;
-            padding-bottom: 8px;
-            border-bottom: 3px solid #3b82f6;
-        ">
-            {icon} {title}
-        </h2>
-    """, unsafe_allow_html=True)
+# Full Extracted Payload
+with st.expander("📄 Full Extracted Payload", expanded=False):
+    st.json(data)
 
-
-def metric_card(label: str, value: str, color: str = "#3b82f6"):
-    """Display a metric in a colored card"""
-    st.markdown(f"""
-        <div style="
-            background-color: #f8fafc;
-            border-left: 5px solid {color};
-            border-radius: 8px;
-            padding: 14px 18px;
-            margin: 8px 0;
-        ">
-            <p style="color: #64748b; margin: 0; font-size: 13px; font-weight: 600; text-transform: uppercase;">
-                {label}
-            </p>
-            <p style="color: #1e293b; margin: 4px 0 0 0; font-size: 20px; font-weight: 700;">
-                {value}
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
+# Navigation
+st.page_link("pages3_Validation_Results.py", label="➡️ Go to Validation Results")
