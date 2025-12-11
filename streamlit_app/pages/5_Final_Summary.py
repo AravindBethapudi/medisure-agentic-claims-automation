@@ -95,43 +95,39 @@ if patient_letter and patient_letter.strip() and patient_letter != "{}":
     """, unsafe_allow_html=True)
     st.write("---")
 
-# After the patient letter display, add PDF download:
+## In pages/5_Final_Summary.py, replace the PDF section with:
+
 if patient_letter and patient_letter.strip() and patient_letter != "{}":
-    st.subheader("Patient Letter")
-    st.markdown(f"""
-        <div style="background-color: #f0f9ff; border: 2px solid #3b82f6; padding: 20px; border-radius: 10px; margin: 10px 0;">
-            <p style="color: #1e3a8a; margin: 0; font-size: 15px; line-height: 1.6; white-space: pre-line;">
-                {patient_letter}
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
+    # ... existing patient letter display ...
     
-    # ADD PDF DOWNLOAD BUTTON HERE
+    # ADD HTML DOWNLOAD BUTTON HERE
+    st.write("")  # Add spacing
+    
     try:
-        from utils.components import pdf_download_button
+        from utils.pdf_utils import create_html_download_button
         
-        # Get patient name from result
-        patient_name = "Unknown"
+        # Get patient info
+        patient_name = "Patient"
+        claim_id = "Unknown"
+        
         if "CLAIM_RESULT" in st.session_state:
             extracted = st.session_state.CLAIM_RESULT.get("extracted_data", {})
             patient_name = extracted.get("patient_name", "Patient")
+            claim_id = extracted.get("claim_id", "Unknown")
         
-        # Get claim ID
-        claim_id = "Unknown"
-        if "CLAIM_RESULT" in st.session_state:
-            extracted = st.session_state.CLAIM_RESULT.get("extracted_data", {})
-            claim_id = extracted.get("claim_id", "CLM-UNKNOWN")
+        # Create download button
+        create_html_download_button(patient_letter, patient_name, claim_id)
         
-        # Add PDF download button
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            pdf_download_button(patient_letter, patient_name, claim_id)
-            
     except ImportError:
-        st.info("📄 PDF download feature available in next update")
+        # Simple fallback
+        st.download_button(
+            label="📄 Download Letter (Text)",
+            data=patient_letter,
+            file_name=f"MediSure_Claim_{claim_id}.txt",
+            mime="text/plain"
+        )
     
     st.write("---")
-
 # ===================================================================
 # Detailed Breakdown
 # ===================================================================
