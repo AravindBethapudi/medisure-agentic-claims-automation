@@ -1,5 +1,10 @@
-fastapi==0.115.4
-uvicorn==0.32.0
-python-multipart==0.0.9
-pydantic==2.10.2
-pypdf==5.1.0
+# Add these to backend/requirements.txt
+pypdf
+fastapi
+uvicorn[standard]
+langgraph
+langchain
+langchain-community
+langchain-ollama
+pydantic
+python-multipart

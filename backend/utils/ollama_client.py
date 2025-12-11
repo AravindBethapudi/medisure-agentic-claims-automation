@@ -1,26 +1,29 @@
-# backend/utils/ollama_client.py
 import requests
 import json
+import os  # Add this import
 
-def ask_llama(messages, model="llama3.2:3b", temperature=0.0):
+def ask_llama(messages, model="llama3.2:1b", temperature=0.0):
     """
     Optimized for 16GB RAM systems
     """
+    # Get Ollama URL from environment variable, default to localhost
+    OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+    
     try:
         response = requests.post(
-            "http://localhost:11434/api/chat",
+            f"{OLLAMA_HOST}/api/chat",  # Use environment variable
             json={
                 "model": model,
                 "messages": messages,
                 "stream": False,
                 "options": {
                     "temperature": temperature,
-                    "num_predict": 512,      # Limit response length
-                    "num_ctx": 2048,         # Smaller context window
-                    "num_thread": 4          # Optimize CPU usage
+                    "num_predict": 512,
+                    "num_ctx": 2048,
+                    "num_thread": 4
                 }
             },
-            timeout=180  # 3 minutes
+            timeout=180
         )
         response.raise_for_status()
         return response.json()["message"]["content"]
@@ -28,7 +31,7 @@ def ask_llama(messages, model="llama3.2:3b", temperature=0.0):
         print(f"⏱️ Model timeout - using fallback")
         return "{}"
     except requests.exceptions.RequestException as e:
-        print(f"❌ Ollama error: {e}")
+        print(f"❌ Ollama error connecting to {OLLAMA_HOST}: {e}")
         return "{}"
     except (KeyError, json.JSONDecodeError) as e:
         print(f"❌ Parse error: {e}")

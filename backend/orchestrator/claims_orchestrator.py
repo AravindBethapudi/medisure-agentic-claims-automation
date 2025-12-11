@@ -5,12 +5,12 @@ import operator
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
 
-from agents.extraction import ExtractionAgent
-from agents.rag import RAGAgent
-from agents.validation import ValidationAgent
-from agents.fraud import FraudDetectionAgent
-from agents.summarization import SummarizationAgent
-from utils.monitoring import monitor
+from backend.agents.extraction import ExtractionAgent
+from backend.agents.rag import RAGAgent
+from backend.agents.validation import ValidationAgent
+from backend.agents.fraud import FraudDetectionAgent
+from backend.agents.summarization import SummarizationAgent
+from backend.utils.monitoring import monitor
 
 
 # === 1. Define the shared state ===

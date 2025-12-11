@@ -7,7 +7,6 @@ from utils.components import load_css, styled_success, styled_error
 st.set_page_config(page_title="Extracted Data", layout="wide")
 st.markdown(load_css(), unsafe_allow_html=True)
 
-
 st.title("🧾 Extracted Claim Data")
 
 # Check session state
@@ -31,11 +30,13 @@ with col1:
     st.subheader("📌 Key Details")
 
     st.write(f"**Claim ID:** {extracted.get('claim_id', 'N/A')}")
-    st.write(f"**Patient:** {extracted.get('patient', {}).get('name', 'N/A')}")
-    st.write(f"**Member ID:** {extracted.get('patient', {}).get('member_id', 'N/A')}")
-    st.write(f"**Provider ID:** {extracted.get('provider', {}).get('id', 'N/A')}")
-    st.write(f"**Service Date:** {extracted.get('date_of_service', 'N/A')}")
-    st.write(f"**Total Amount:** ${extracted.get('total_amount', 0)}")
+    st.write(f"**Patient:** {extracted.get('patient_name', 'N/A')}")
+    st.write(f"**Member ID:** {extracted.get('member_id', 'N/A')}")
+    st.write(f"**Provider:** {extracted.get('provider_name', 'N/A')}")
+    st.write(f"**Provider ID:** {extracted.get('provider_id', 'N/A')}")
+    st.write(f"**Service Date:** {extracted.get('service_date', 'N/A')}")
+    st.write(f"**Total Amount:** ${extracted.get('claim_amount', 0)}")
+    st.write(f"**Plan Type:** {extracted.get('plan_type', 'N/A')}")
 
     st.write("### Diagnosis Codes")
     st.json(extracted.get("diagnosis_codes", []))

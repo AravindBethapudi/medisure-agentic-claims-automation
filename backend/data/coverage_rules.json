@@ -1,18 +1,6 @@
 {
-    "plans": {
-        "PREMIUM": {
-            "covered_procedures": ["99213", "99214", "80050", "80053", "99215"],
-            "max_amount_without_review": 2000.0,
-            "copay": 25
-        },
-        "BASIC": {
-            "covered_procedures": ["99213"],
-            "max_amount_without_review": 500.0,
-            "copay": 50
-        }
-    },
-    "authorization_required": ["80050", "80053", "99215"],
-    "global_rules": {
-        "max_amount_auto_approve": 1000.0
-    }
+  "standard_plan": {
+    "covered_procedures": ["99214", "94640"],
+    "max_claim_amount": 50000
+  }
 }

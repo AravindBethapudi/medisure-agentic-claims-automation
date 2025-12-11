@@ -1,5 +1,5 @@
 # backend/agents/fraud.py
-from utils.ollama_client import ask_llama
+from ..utils.ollama_client import ask_llama
 import re
 
 class FraudDetectionAgent:

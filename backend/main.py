@@ -2,8 +2,8 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import PlainTextResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from orchestrator.claims_orchestrator import process_claim as orchestrator_process_claim
-from utils.monitoring import monitor
+from backend.orchestrator.claims_orchestrator import process_claim as orchestrator_process_claim
+from backend.utils.monitoring import monitor
 
 app = FastAPI(
     title="MediSure Agentic Claims API",

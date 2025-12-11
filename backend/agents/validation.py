@@ -1,7 +1,8 @@
+
 # backend/agents/validation.py
 import json
 from pathlib import Path
-from utils.ollama_client import ask_llama
+from ..utils.ollama_client import ask_llama
 
 class ValidationAgent:
     def __init__(self):
