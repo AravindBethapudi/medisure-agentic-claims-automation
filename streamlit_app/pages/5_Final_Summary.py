@@ -111,7 +111,7 @@ if patient_letter and patient_letter.strip() and patient_letter != "{}":
         claim_id = "Unknown"
         
         if "CLAIM_RESULT" in st.session_state:
-            extracted = st.session_state.CLAIM_RESULT.get("extracted_data", {})
+            extracted = st.session_state.CLAIM_RESULT.get("extracted", {})
             patient_name = extracted.get("patient_name", "Patient")
             claim_id = extracted.get("claim_id", "Unknown")
         

@@ -20,12 +20,9 @@ RUN pip install --no-cache-dir -r backend/requirements.txt -r streamlit_app/requ
 # Copy code
 COPY . .
 
-# Create Streamlit secrets in the correct location (/root/.streamlit/)
-RUN mkdir -p /root/.streamlit && \
-    printf '[general]\nBACKEND_URL = "http://localhost:8000"\n' > /root/.streamlit/secrets.toml
-
 # Make Python find your modules
 ENV PYTHONPATH=/app
+ENV BACKEND_URL=http://localhost:8000
 
 # Expose ports
 EXPOSE 8000 8501 11434
@@ -54,7 +51,7 @@ echo "Starting backend API..."\n\
 cd /app && uvicorn backend.main:app --host 0.0.0.0 --port 8000 &\n\
 \n\
 echo "Starting Streamlit app..."\n\
-streamlit run streamlit_app/app.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true\n' > start.sh \
+streamlit run streamlit_app/app.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true --server.maxUploadSize=2\n' > start.sh \
     && chmod +x start.sh
 
 CMD ["/bin/bash", "/app/start.sh"]

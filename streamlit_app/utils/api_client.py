@@ -2,14 +2,13 @@ import os
 import requests
 import streamlit as st
 from typing import Optional, Dict, Any
+from .api_contract import normalize_claim_result
 from .components import styled_error, styled_success, styled_warning, styled_info
 
-# ─── BACKEND URL CONFIGURATION ──────────────────────────────
-# Priority: Streamlit Secrets > Environment Variable > Local Fallback
-if "BACKEND_URL" in st.secrets:
-    BACKEND_URL = st.secrets["BACKEND_URL"]
-else:
-    BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
+# Reading Streamlit secrets here would run a Streamlit command before each
+# page calls set_page_config. Deployment and local setup therefore use one
+# explicit environment variable.
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 # Remove trailing slash if present
 BACKEND_URL = BACKEND_URL.rstrip("/")
@@ -84,13 +83,13 @@ class APIClient:
 
             # Handle response
             if response.status_code == 200:
-                result = response.json()
+                result = normalize_claim_result(response.json())
                 
                 # Save all data to session state
                 APIClient._save_to_session_state(result)
                 
                 # Log what was saved
-                extracted_data = result.get('extracted_data', {})
+                extracted_data = result.get('extracted', {})
                 styled_success(
                     "Claim Processed",
                     f"Extracted {len(extracted_data.get('diagnosis_codes', []))} diagnosis codes and "
@@ -133,13 +132,13 @@ class APIClient:
             st.session_state["CLAIM_RESULT"] = result
             
             # Save individual components for easy access
-            extracted_data = result.get('extracted_data', {})
+            extracted_data = result.get('extracted', {})
             st.session_state["EXTRACTED_DATA"] = extracted_data
             
-            validation_result = result.get('validation_result', {})
+            validation_result = result.get('validation', {})
             st.session_state["VALIDATION_RESULT"] = validation_result
             
-            fraud_analysis = result.get('fraud_analysis', {})
+            fraud_analysis = result.get('fraud', {})
             st.session_state["FRAUD_ANALYSIS"] = fraud_analysis
             
             final_decision = result.get('final_decision', {})

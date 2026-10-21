@@ -3,7 +3,21 @@
     "file": "TEST1.json",
     "decision": "APPROVE",
     "fraud_risk": "LOW",
-    "amount": 285,
+    "amount": 285.0,
     "patient": "Emma Johnson"
+  },
+  {
+    "file": "TEST2.json",
+    "decision": "REJECT",
+    "fraud_risk": "HIGH",
+    "amount": 5000.0,
+    "patient": "John Smith"
+  },
+  {
+    "file": "TEST3.json",
+    "decision": "REJECT",
+    "fraud_risk": "LOW",
+    "amount": 150.0,
+    "patient": "Alice Brown"
   }
 ]

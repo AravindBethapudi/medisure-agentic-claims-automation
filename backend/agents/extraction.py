@@ -2,8 +2,8 @@
 import io
 import re
 import json
-import hashlib
 from datetime import datetime
+from uuid import uuid4
 from pypdf import PdfReader
 from ..utils.ollama_client import ask_llama
 
@@ -24,6 +24,7 @@ class ExtractionAgent:
         data = self._extract_with_rules(text)
 
         # Use LLM only if key fields missing
+        extraction_method = "hybrid_rules"
         if not data.get("patient_name") or not data.get("claim_amount"):
             messages = [
                 {"role": "system", "content": "You are an expert medical claims extractor. Return ONLY valid JSON with these fields: patient_name, member_id, claim_amount, service_date, diagnosis_codes, procedure_codes, provider_name, claim_id."},
@@ -36,9 +37,9 @@ Text:
             llm_data = self._try_extract_json(llm_out)
             if llm_data:
                 data.update(llm_data)
-                data["extraction_method"] = "hybrid_llm"
+                extraction_method = "hybrid_llm"
 
-        data["extraction_method"] = "hybrid_rules"
+        data["extraction_method"] = extraction_method
         return data
 
     def _try_extract_json(self, text):
@@ -56,7 +57,7 @@ Text:
                     data = json.loads(json_match.group())
                     if isinstance(data, dict):
                         return self._clean_json_data(data)
-                except:
+                except json.JSONDecodeError:
                     return None
         return None
 
@@ -76,12 +77,7 @@ Text:
         # Generate a claim ID if none found
         if not claim_id:
             timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-            data_str = f"{data.get('patient_name','')}{data.get('member_id','')}{data.get('service_date','')}"
-            if data_str:
-                hash_part = hashlib.md5(data_str.encode()).hexdigest()[:6].upper()
-                claim_id = f"AUTO-{timestamp}-{hash_part}"
-            else:
-                claim_id = f"AUTO-{timestamp}"
+            claim_id = f"AUTO-{timestamp}-{uuid4().hex[:6].upper()}"
         
         # Ensure other fields have defaults
         return {
@@ -94,7 +90,6 @@ Text:
             "procedure_codes": list(data.get("procedure_codes", [])),
             "provider_name": data.get("provider_name", ""),
             "plan_type": data.get("plan_type", "STANDARD"),
-            "raw_text_preview": str(data)[:500] if len(str(data)) > 500 else str(data),
             "extraction_timestamp": datetime.now().isoformat()
         }
 
@@ -117,7 +112,6 @@ Text:
             "procedure_codes": re.findall(r'\b\d{5}\b', text),
             "provider_name": self._find(text, ["provider", "physician", "doctor", "provider_name", "attending"]),
             "plan_type": self._find(text, ["plan type", "plan_type", "plan", "coverage type"]),
-            "raw_text_preview": text[:500]
         }
 
     def _find(self, text, keywords):
