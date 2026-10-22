@@ -1,6 +1,7 @@
 # backend/orchestrator/claims_orchestrator.py - WITH MONITORING
 from typing import TypedDict, Annotated, List, Dict, Any
 import operator
+from uuid import uuid4
 
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
@@ -119,10 +120,10 @@ app = workflow.compile(checkpointer=memory)
 # === 5. Main entry point with monitoring ===
 def process_claim(file_bytes: bytes, content_type: str, filename: str) -> Dict[str, Any]:
     """
-    Process claim with full monitoring
+    Process one synthetic claim while keeping monitoring identifiers audit-safe.
     """
-    claim_id = filename  # Use filename as claim ID
-    tracking = monitor.start_claim(claim_id)
+    processing_id = uuid4().hex[:12]
+    tracking = monitor.start_claim(processing_id)
     
     inputs = {
         "file_bytes": file_bytes,
@@ -131,7 +132,8 @@ def process_claim(file_bytes: bytes, content_type: str, filename: str) -> Dict[s
         "tracking": tracking
     }
     
-    config = {"configurable": {"thread_id": "default"}}
+    # Each request gets an isolated checkpoint thread to prevent state crossover.
+    config = {"configurable": {"thread_id": processing_id}}
     
     print("\nSTARTING LANGGRAPH MULTI-AGENT CLAIMS PROCESSING\n")
     
@@ -155,8 +157,6 @@ def process_claim(file_bytes: bytes, content_type: str, filename: str) -> Dict[s
         
         return output
         
-    except Exception as e:
-        print(f"\n❌ ERROR PROCESSING CLAIM: {e}\n")
-        # Log error
-        monitor.complete_claim(tracking, {}, error=str(e))
+    except Exception as exc:
+        monitor.complete_claim(tracking, {}, error=type(exc).__name__)
         raise

@@ -21,7 +21,7 @@ if result is None:
     st.page_link("pages/1_Upload_Claim.py", label="⬅️ Upload a claim file")
     st.stop()
 
-fraud = result.get("fraud_analysis", {})
+fraud = result.get("fraud", {})
 
 risk_score = fraud.get("risk_score", 0)
 risk_level = fraud.get("risk_level", "UNKNOWN")

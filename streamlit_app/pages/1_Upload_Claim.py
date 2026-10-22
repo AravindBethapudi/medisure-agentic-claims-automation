@@ -11,12 +11,13 @@ st.markdown(load_css(), unsafe_allow_html=True)
 # Page Title
 st.title("📤 Upload Claim File")
 st.write("Upload a claim file in **JSON**, **XML**, or **PDF** format to begin processing.")
+st.warning("Portfolio prototype: upload synthetic claim data only. Do not upload real patient information.")
 
 # File uploader
 uploaded_file = st.file_uploader(
     "Choose a claim file",
     type=["json", "xml", "pdf"],
-    help="Accepted formats: .json, .xml, .pdf"
+    help="Accepted formats: .json, .xml, .pdf. Maximum size: 2 MB."
 )
 
 # Button to trigger backend processing

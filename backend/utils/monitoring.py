@@ -37,7 +37,7 @@ class ClaimsMonitor:
         self.log_file.parent.mkdir(exist_ok=True)
     
     def start_claim(self, claim_id: str) -> Dict[str, Any]:
-        """Start tracking a new claim"""
+        """Start tracking with a generated ID that contains no claim content."""
         return {
             "claim_id": claim_id,
             "start_time": time.time(),
@@ -66,7 +66,7 @@ class ClaimsMonitor:
         return AgentTimer(self, tracking, agent_name)
     
     def complete_claim(self, tracking: Dict, result: Dict[str, Any], error: str = None):
-        """Complete claim tracking and update metrics"""
+        """Record aggregate outcomes without storing raw document content."""
         with self.lock:
             total_time = time.time() - tracking["start_time"]
             
